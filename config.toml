@@ -1,0 +1,31 @@
+baseURL = "https://docs.ginuerzh.xyz/linux/"
+title = "LINUX"
+theme = "beautifulhugo"
+hasCJKLanguage = true
+
+[params]
+  # subtitle = ""
+  logo = "linux.jpg"
+  # favicon = "img/favicon.ico"
+  # dateFormat = "January 2, 2006" # default date format
+  # commit = false
+  # rss = true
+  # comments = true
+  # gcse = "012345678901234567890:abcdefghijk" # Get your code from google.com/cse. Make sure to go to "Look and Feel" and change Layout to "Full Width" and Theme to "Classic"
+
+
+[[menu.main]]
+    identifier = "contents"
+    name = "Contents"
+    weight = 1
+
+[[menu.main]]
+    parent = "contents"
+    name = "Bach"
+    url = "bach/"
+    weight = 1
+
+[[menu.main]]
+  name = "about"
+  url = "about/"
+  weight = 2
