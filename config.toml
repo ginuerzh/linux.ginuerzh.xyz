@@ -6,6 +6,7 @@ theme = "beautifulhugo"
 [params]
   # subtitle = ""
   logo = "linux.jpg"
+  useHLJS = true
   # favicon = "img/favicon.ico"
   # dateFormat = "January 2, 2006" # default date format
   # commit = false
