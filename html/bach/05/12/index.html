@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>5.12 PIPES</title>
+  <meta property="og:title" content="5.12 PIPES" />
+  <meta name="twitter:title" content="5.12 PIPES" />
+  <meta name="description" content="Pipes allow transfer of data between processes in a first-in-first-out manner (FIFO) , and they also allow synchronization of process execution. Their implementation allows processes to communicate even though they do not know what processes are on the other end of the pipe. The traditional implementation of pipes uses the file system for data storage. There are two kinds of pipes: named pipes and, for lack of a better term, unnamed pipes, which are identical except for the way that a process initially accesses them.">
+  <meta property="og:description" content="Pipes allow transfer of data between processes in a first-in-first-out manner (FIFO) , and they also allow synchronization of process execution. Their implementation allows processes to communicate even though they do not know what processes are on the other end of the pipe. The traditional implementation of pipes uses the file system for data storage. There are two kinds of pipes: named pipes and, for lack of a better term, unnamed pipes, which are identical except for the way that a process initially accesses them.">
+  <meta name="twitter:description" content="Pipes allow transfer of data between processes in a first-in-first-out manner (FIFO) , and they also allow synchronization of process execution. Their implementation allows processes to communicate …">
+  <meta name="author" content=""/>
+  <meta property="og:image" content="https://docs.ginuerzh.xyz/linux/linux.jpg" />
+  <meta name="twitter:image" content="https://docs.ginuerzh.xyz/linux/linux.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://docs.ginuerzh.xyz/linux/bach/05/12/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="LINUX" />
+
+  <meta name="generator" content="Hugo 0.40.1" />
+  <link rel="canonical" href="https://docs.ginuerzh.xyz/linux/bach/05/12/" />
+  <link rel="alternate" href="https://docs.ginuerzh.xyz/linux/index.xml" type="application/rss+xml" title="LINUX">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://docs.ginuerzh.xyz/linux/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://docs.ginuerzh.xyz/linux/css/highlight.min.css" /><link rel="stylesheet" href="https://docs.ginuerzh.xyz/linux/css/codeblock.css" />
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://docs.ginuerzh.xyz/linux/">LINUX</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li class="navlinks-container">
+              <a class="navlinks-parent" href="javascript:void(0)">Contents</a>
+              <div class="navlinks-children">
+                
+                  <a href="/linux/bach/">Bach</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li>
+              <a title="about" href="/linux/about/">about</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    <div class="avatar-container">
+      <div class="avatar-img-border">
+        
+          <a title="LINUX" href="https://docs.ginuerzh.xyz/linux/">
+            <img class="avatar-img" src="https://docs.ginuerzh.xyz/linux/linux.jpg" alt="LINUX" />
+          </a>
+        
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+
+
+    
+  
+  
+  
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="bach-heading">
+              <h1>5.12 PIPES</h1>
+                
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        
+
+<p>Pipes allow transfer of data between processes in a first-in-first-out manner (<em>FIFO</em>) , and they also allow synchronization of process execution. Their implementation allows processes to communicate even though they do not know what processes are on the other end of the pipe. The traditional implementation of pipes uses the file system for data storage. There are two kinds of pipes: <em>named pipes</em> and, for lack of a better term, <em>unnamed pipes</em>, which are identical except for the way that a process initially accesses them. Processes use the <em>open</em> system call for named pipes, but the <em>pipe</em> system call to create an unnamed pipe. Afterwards, processes use the regular system calls for files, such as <em>read</em>, <em>write</em>, and <em>close</em> when manipulating pipes. Only related processes, descendants of a process that issued the <em>pipe</em> call, can share access to unnamed pipes. In Figure 5.15 for example, if process B creates a pipe and then spawns processes D and E, the three processes share access to the pipe, but processes A and C do not. However, all processes can access a named pipe regardless of their relationship, subject to the usual file permissions.</p>
+
+<p><img src="/linux/img/bach/figure5.15.jpg" alt="figure 5.15" /></p>
+
+<p><strong>Figure 5.15.</strong> Process Tree and Sharing Pipes</p>
+
+<p>Because unnamed pipes are more common, they will be presented first.</p>
+
+<h2 id="5-12-1-the-pipe-system-call">5.12.1 The Pipe System Call</h2>
+
+<p>The syntax for creation of a pipe is</p>
+
+<pre><code class="language-c">pipe(fdptr);
+</code></pre>
+
+<p>where <em>fdptr</em> is the pointer to an integer array that will contain the two file descriptors for <em>reading</em> and <em>writing</em> the pipe. Because the kernel implements pipes in the file system and because a pipe does not exist before its use, the kernel must assign an inode for it on creation. It also allocates a pair of user file descriptors and corresponding file table entries for the pipe: one file descriptor for <em>reading</em> from the pipe and the other for <em>writing</em> to the pipe. It uses the file table so that the interface for the <em>read</em>, <em>write</em> and other system calls is consistent with the interface for regular files. As a result, processes do not have to know whether they are <em>reading</em> or <em>writing</em> a regular file or a pipe.</p>
+
+<pre><code class="language-text">algorithm pipe
+input:  none
+output: read file descriptor
+        write file descriptor
+{
+    assign new inode from pipe device (algorithm ialloc);
+    allocate file table entry for reading, another for writing;
+    initialize file table entries to point to new inode;
+    allocate user file descriptor for reading, another for writing, initialize to point to respective file table entries;
+    set inode reference count to 2;
+    initialize count of inode readers, writers to 1;
+}
+</code></pre>
+
+<p><strong>Figure 5.16.</strong> Algorithm for Creation of (Unnamed) Pipes</p>
+
+<p>Figure 5.16 shows the algorithm for creating unnamed pipes. The kernel assigns an inode for a pipe from a file system designated the <em>pipe device</em> using algorithm <em>ialloc</em>. A pipe device is just a file system from which the kernel can assign inodes and data blocks for pipes. System administrators specify a pipe device during system configuration, and it may be identical to another file system. While a pipe is active, the kernel cannot reassign the pipe inode and data blocks to another file.</p>
+
+<p>The kernel then allocates two file table entries for the read and write descriptors, respectively, and updates the bookkeeping information in the in-core inode. Each file table entry records how many instances of the pipe are open for reading or writing, initially 1 for each file table entry, and the inode reference count indicates how many times the pipe was &ldquo;opened,&rdquo; initially two - one for each file table entry. Finally, the inode records byte offsets in the pipe where the next read or write of the pipe will start. Maintaining the byte offsets in the inode allows convenient FIFO access to the pipe data and differs from regular files where the offset is maintained in the file table. Processes cannot adjust them via the <em>lseek</em> system call and so random access I/O to a pipe is not possible.</p>
+
+<h2 id="5-12-2-opening-a-named-pipe">5.12.2 Opening a Named Pipe</h2>
+
+<p>A named pipe is a file whose semantics are the same as those of an unnamed pipe; except that it has a directory entry and is accessed by a path name. Processes <em>open</em> named pipes in the same way that they open regular files and, hence, processes that are not closely related can communicate. Named pipes permanently exist in the file system hierarchy (subject to their removal by the <em>unlink</em> system call), but unnamed pipes are transient: When all processes finish using the pipe, the kernel reclaims its inode.</p>
+
+<p>The algorithm for opening a named pipe is identical to the algorithm for opening a regular file. However, before completing the system call, the kernel increments the read or write counts in the inode, indicating the number of processes that have the named pipe open for reading or writing. A process that <em>opens</em> the named pipe for reading will sleep until another process opens the named pipe for writing, and vice versa. It makes no sense for a pipe to be open for reading if there is no hope for it to receive data; the same is true for writing. Depending on whether the process opens the named pipe for reading or writing, the kernel awakens other processes that were asleep, waiting for a writer or reader process (respectively) on the named pipe.</p>
+
+<p>If a process <em>opens</em> a named pipe for reading and a writing process exists, the <em>open</em> call completes. Or if a process <em>opens</em> a named pipe with the <em>no delay</em> option, the <em>open</em> returns immediately, even if there are no writing processes. But if neither condition is true, the process sleeps until a writer process <em>opens</em> the pipe. Similar rules hold for a process that <em>opens</em> a pipe for writing.</p>
+
+<h2 id="5-12-3-reading-and-writing-pipes">5.12.3 Reading and Writing Pipes</h2>
+
+<p>A pipe should be viewed as if processes <em>write</em> into one end of the pipe and <em>read</em> from the other end. As mentioned above, processes access data from a pipe in FIFO manner, meaning that the order that data is written into a pipe is the order that it is read from the pipe. The number of processes <em>reading</em> from a pipe do not necessarily equal the number of processes <em>writing</em> the pipe; if the number of readers or writers is greater than 1, they must coordinate use of the pipe with other mechanisms. The kernel accesses the data for a pipe exactly as it accesses data for a regular file: It stores data on the pipe device and assigns blocks to the pipe as needed during <em>write</em> calls. The difference between storage allocation for a pipe and a regular file is that a pipe uses only the direct blocks of the inode for greater efficiency, although this places a limit on how much data a pipe can hold at a time. The kernel manipulates the direct blocks of the inode as a circular queue, maintaining read and write pointers internally to preserve the FIFO order (Figure
+5.17).</p>
+
+<p><img src="/linux/img/bach/figure5.17.jpg" alt="figure 5.17" /></p>
+
+<p><strong>Figure 5.17.</strong> Logical View of Reading and Writing a Pipe</p>
+
+<p>Consider four cases for <em>reading</em> and <em>writing</em> pipes: <em>writing</em> a pipe that has room for the data being written, <em>reading</em> from a pipe that contains enough data to satisfy the <em>read</em>, <em>reading</em> from a pipe that does not contain enough data to satisfy the <em>read</em>, and finally, <em>writing</em> a pipe that does not have room for the data being written.</p>
+
+<p>Consider first the case that a process is writing a pipe and assume that the pipe has room for the data being written: The sum of the number of bytes being written and the number of bytes already in the pipe is less than or equal to the pipe&rsquo;s capacity. The kernel follows the algorithm for writing a regular file, except that it increments the pipe size automatically after every <em>write</em>, since by definition the amount of data in the pipe grows with every <em>write</em>. This differs from the growth of
+a regular file where the process increments the file size only when it <em>writes</em> data beyond the current end of file. If the next byte offset in the pipe were to require use of an indirect block, the kernel adjusts the file offset value in the <em>u area</em> to point to the beginning of the pipe (byte offset 0). The kernel never overwrites data in the pipe; it can reset the byte offset to 0 because it has already determined that the data will not overflow the pipe&rsquo;s capacity. When the writer process has written all its data into the pipe, the kernel updates the pipe&rsquo;s (inode) write pointer so that the next process to <em>write</em> the pipe will proceed from where the last <em>write</em> stopped. The kernel then awakens all other processes that fell asleep waiting to read data from the pipe.</p>
+
+<p>When a process <em>reads</em> a pipe, it checks if the pipe is empty or not. If the pipe contains data, the kernel <em>reads</em> the data from the pipe as if the pipe were a regular file, following the regular algorithm for <em>read</em>. However, its initial offset is the pipe read pointer stored in the inode, indicating the extent of the previous <em>read</em>. After <em>reading</em> each block, the kernel decrements the size of the pipe according to the number of bytes it read, and it adjusts the <em>u area</em> offset value to wrap around to the beginning of the pipe, if necessary. When the <em>read</em> system call completes, the kernel awakens all sleeping writer processes and saves the current read offset in the inode (not in the file table entry).</p>
+
+<p>If a process attempts to <em>read</em> more data than is in the pipe, the <em>read</em> will complete successfully after returning all data currently in the pipe, even though it does not satisfy the user count. If the pipe is empty, the process will typically sleep until another process <em>writes</em> data into the pipe, at which time all sleeping processes that were waiting for data wake up and race to <em>read</em> the pipe. If, however, a process <em>open</em> s a named pipe with the <em>no delay</em> option, it will return immediately from a <em>read</em> if the pipe contains no data. The semantics of reading and writing pipes are similar to the semantics of reading and writing terminal devices (Chapter 10), allowing programs to ignore the type of file they are dealing with.</p>
+
+<p>If a process <em>writes</em> a pipe and the pipe cannot hold all the data, the kernel marks the inode and goes to sleep waiting for data to drain from the pipe. When another process subsequently <em>reads</em> from the pipe, the kernel will notice that processes are asleep waiting for data to drain from the pipe, and it will awaken them, as explained above. The exception to this statement is when a process <em>writes</em> an amount of data greater than the pipe capacity (that is, the amount of data that
+can be stored in the inode direct blocks); here, the kernel <em>writes</em> as much data as possible to the pipe and puts the process to sleep until more room becomes available. Thus, it is possible that written data will not be contiguous in the pipe if other processes write their data to the pipe before this process resumes its write.</p>
+
+<p>Analyzing the implementation of pipes, the process interface is consistent with that of regular files, but the implementation differs because the kernel stores the read and write offsets in the inode instead of in the file table. The kernel must store the offsets in the inode for named pipes so that processes can share their values: They cannot share values stored in file table entries because a process gets a new file table entry for each <em>open</em> call. However, the sharing of read and write offsets in the inode predates the implementation of named pipes. Processes with access to unnamed pipes share access to the pipe through common file table entries, so they could conceivably store the read and write offsets in the file table entry, as is done for regular files. This was not done, because the low-level routines in the kernel no longer have access to the file table entry: The code is simpler because the processes share offsets stored in the inode.</p>
+
+<h2 id="5-12-4-closing-pipes">5.12.4 Closing Pipes</h2>
+
+<p>When closing a pipe, a process follows the same procedure it would follow for closing a regular file, except that the kernel does special processing before releasing the pipe&rsquo;s inode. The kernel decrements the number of pipe readers or writers. according to the type of the file descriptor. If the count of writer processes drops to 0 and there are processes asleep waiting to read data from the pipe, the kernel awakens them, and they return from their <em>read</em> calls without reading any data. If the count of reader processes drops to 0 and there are processes asleep waiting to write data to the pipe, the kernel awakens them and sends them a signal (Chapter 7) to indicate an error condition. In both cases, it makes no sense to allow the processes to continue sleeping when there is no hope that the state of the pipe will ever change. For example, if a process is waiting to read an unnamed pipe and there are no more writer processes, there will never be a writer process. Although it is possible to get new reader or writer processes for named pipes, the kernel treats them consistently with unnamed pipes. If no reader or writer processes access the pipe, the kernel frees all its data blocks and adjusts the inode to indicate that the pipe is empty. When it releases the inode of an ordinary pipe, it frees the disk copy for reassignment.</p>
+
+<h2 id="5-12-5-examples">5.12.5 Examples</h2>
+
+<p>The program in Figure 5.18 illustrates an artificial use of pipes. The process creates a pipe and goes into an infinite loop, <em>writing</em> the string &ldquo;hello&rdquo; to the pipe and <em>reading</em> it from the pipe. The kernel does not know nor does it care that the process that writes the pipe is the same process that reads the pipe.</p>
+
+<pre><code class="language-c">char string[] = &quot;hello&quot;;
+main()
+{
+    char buf[1024];
+    char *cp1, *cp2;
+    int fds[2];
+
+    cp1 = string;
+    cp2 = buf;
+    while (*cp1)
+        *cp2++ = *cp1++;
+    pipe(fds);
+    for (;;)
+    {
+        write(fds[1], buf, 6);
+        read(fds[O], buf, 6);
+    }
+}
+</code></pre>
+
+<p><strong>Figure 5.18.</strong> Reading and Writing a Pipe</p>
+
+<p>A process executing the program in Figure 5.19 creates a named pipe node called &ldquo;fifo&rdquo;. If invoked with a second (dummy) argument, it continually <em>writes</em> the string &ldquo;hello&rdquo; into the pipe; if invoked without a second argument, it <em>reads</em> the named pipe. The two processes are invocations of the identical program and have secretly agreed to communicate through the named pipe &ldquo;fifo&rdquo;, but they need not be related. Other users could execute the program and participate in (or interfere
+with) the conversation.</p>
+
+<pre><code class="language-c">#include &lt;fcntl.h&gt;
+char string[] = &quot;hello&quot;;
+main (argc, argv)
+    int argc;
+    char *argv[];
+{
+    int fd;
+    char buf[256];
+
+    /* create named pipe with read/write permission for all users */
+    mknod(&quot;fifo&quot;, 010777, 0);
+    if (argc == 2)
+        fd = open(&quot;fifo&quot;, O_WRONLY);
+    else
+        fd = open(&quot;fifo&quot;, O_RDONLY);
+    for (;;)
+        if (argc == 2)
+            write(fd, string, 6);
+        else
+            read(fd, buf, 6);
+}
+</code></pre>
+
+<p><strong>Figure 5.19.</strong> Reading and Writing a Named Pipe</p>
+
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://docs.ginuerzh.xyz/linux/bach/05/11/" data-toggle="tooltip" data-placement="top" title="5.11 STAT AND FSTAT">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://docs.ginuerzh.xyz/linux/bach/05/13/" data-toggle="tooltip" data-placement="top" title="5.13 DUP">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://docs.ginuerzh.xyz/linux/">LINUX</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.40.1</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://docs.ginuerzh.xyz/linux/js/main.js"></script>
+<script src="https://docs.ginuerzh.xyz/linux/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://docs.ginuerzh.xyz/linux/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

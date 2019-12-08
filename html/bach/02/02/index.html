@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>2.2 INTRODUCTION TO SYSTEM CONCEPTS</title>
+  <meta property="og:title" content="2.2 INTRODUCTION TO SYSTEM CONCEPTS" />
+  <meta name="twitter:title" content="2.2 INTRODUCTION TO SYSTEM CONCEPTS" />
+  <meta name="description" content="This section gives an overview of some major kernel data structures and describes the function of modules shown in Figure 2.1 in more detail.
+2.2.1 An Overview of the File Subsystem The internal representation of a file is given by an inode, which contains a description of the disk layout of the file data and other information such as the file owner, access permissions, and access times. The term inode is a contraction of the term index node and is commonly used in literature on the UNIX system.">
+  <meta property="og:description" content="This section gives an overview of some major kernel data structures and describes the function of modules shown in Figure 2.1 in more detail.
+2.2.1 An Overview of the File Subsystem The internal representation of a file is given by an inode, which contains a description of the disk layout of the file data and other information such as the file owner, access permissions, and access times. The term inode is a contraction of the term index node and is commonly used in literature on the UNIX system.">
+  <meta name="twitter:description" content="This section gives an overview of some major kernel data structures and describes the function of modules shown in Figure 2.1 in more detail.
+2.2.1 An Overview of the File Subsystem The internal …">
+  <meta name="author" content=""/>
+  <meta property="og:image" content="https://docs.ginuerzh.xyz/linux/linux.jpg" />
+  <meta name="twitter:image" content="https://docs.ginuerzh.xyz/linux/linux.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://docs.ginuerzh.xyz/linux/bach/02/02/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="LINUX" />
+
+  <meta name="generator" content="Hugo 0.40.1" />
+  <link rel="canonical" href="https://docs.ginuerzh.xyz/linux/bach/02/02/" />
+  <link rel="alternate" href="https://docs.ginuerzh.xyz/linux/index.xml" type="application/rss+xml" title="LINUX">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://docs.ginuerzh.xyz/linux/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://docs.ginuerzh.xyz/linux/css/highlight.min.css" /><link rel="stylesheet" href="https://docs.ginuerzh.xyz/linux/css/codeblock.css" />
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://docs.ginuerzh.xyz/linux/">LINUX</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li class="navlinks-container">
+              <a class="navlinks-parent" href="javascript:void(0)">Contents</a>
+              <div class="navlinks-children">
+                
+                  <a href="/linux/bach/">Bach</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li>
+              <a title="about" href="/linux/about/">about</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    <div class="avatar-container">
+      <div class="avatar-img-border">
+        
+          <a title="LINUX" href="https://docs.ginuerzh.xyz/linux/">
+            <img class="avatar-img" src="https://docs.ginuerzh.xyz/linux/linux.jpg" alt="LINUX" />
+          </a>
+        
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+
+
+    
+  
+  
+  
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="bach-heading">
+              <h1>2.2 INTRODUCTION TO SYSTEM CONCEPTS</h1>
+                
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        
+
+<p>This section gives an overview of some major kernel data structures and describes the function of modules shown in Figure 2.1 in more detail.</p>
+
+<h2 id="2-2-1-an-overview-of-the-file-subsystem">2.2.1 An Overview of the File Subsystem</h2>
+
+<p>The internal representation of a file is given by an <em>inode</em>, which contains a description of the disk layout of the file data and other information such as the file owner, access permissions, and access times. The term inode is a contraction of the term <em>index node</em> and is commonly used in literature on the UNIX system. Every file has one inode, but it may have several names, all of which map into the inode. Each name is called a link. When a process refers to a file by name, the kernel parses the file name one component at a time, checks that the process has permission to search the directories in the path, and eventually retrieves the inode for the file. For example, if a process calls</p>
+
+<pre><code class="language-c">open(&quot;/fs2/mjb/rje/sourcefile&quot;, 1);
+</code></pre>
+
+<p>the kernel retrieves the inode for &ldquo;/fs2/mjb/rje/sourcefile&rdquo;. When a process creates a new file, the kernel assigns it an unused inode. Inodes are stored in the file system, as will be seen shortly, but the kernel reads them into an in-core<sup>1</sup> inode table when manipulating files.</p>
+
+<p>The kernel contains two other data structures, the <em>file table</em> and the <em>user file descriptor table</em>. The file table is a global kernel structure, but the user file descriptor table is allocated per process. When a process <em>opens</em> or <em>creats</em> a file, the kernel allocates an entry from each table, corresponding to the file&rsquo;s inode. Entries in the three structures - user file descriptor table, file table, and inode table - maintain the state of the file and the user&rsquo;s access to it. The file table keeps track of the byte offset in the file where the user&rsquo;s next <em>read</em> or <em>write</em> will start, and the access rights allowed to the opening process. The user file descriptor table identifies all open files for a process.</p>
+
+<p><img src="/linux/img/bach/figure2.2.jpg" alt="figure 2.2" /></p>
+
+<p><strong>Figure 2.2.</strong> File Descriptors, File Table, and Inode Table</p>
+
+<p>Figure 2.2 shows the tables and their relationship to each other. The kernel returns a <em>file descriptor</em> for the <em>open</em> and <em>creat</em> system calls, which is an index into the user file descriptor table. When executing <em>read</em> and <em>write</em> system calls, the kernel uses the file descriptor to access the user file descriptor table, follows pointers to the file table and inode table entries, and, from the inode, finds the data in the file. Chapters 4 and 5 describe these data structures in great detail. For now, suffice it to say that use of three tables allows various degrees of sharing access to a file.</p>
+
+<p>The UNIX system keeps regular files and directories on block devices such as tapes or disks. Because of the difference in access time between the two, few, if any, UNIX system installations use tapes for their file systems. In coming years, diskless work stations will be common, where files are located on a remote system and accessed via a network (see Chapter 13). For simplicity, however, the ensuing text assumes the use of disks. An installation may have several physical disk units, each containing one or more <em>file systems</em>. Partitioning a disk into several file systems makes it easier for administrators to manage the data stored there. The kernel deals on a logical level with file systems rather than with disks, treating each one as a <em>logical device</em> identified by a logical <em>device number</em>. The conversion between logical device (file system) addresses and physical device (disk) addresses is done by the disk driver. This book will use the term device to mean a logical device unless explicitly stated otherwise.</p>
+
+<p>A file system consists of a sequence of logical blocks, each containing 512, 1024, 2048, or any convenient multiple of 512 bytes, depending on the system implementation. The size of a logical block is homogeneous within a file system but may vary between different file systems in a system configuration. Using large logical blocks increases the effective data transfer rate between disk and memory, because the kernel can transfer more data per disk operation and therefore make fewer time-consuming operations. For example, reading 1K bytes from a disk in one read operation is faster than reading 512 bytes twice. However, if a logical block is too large, effective storage capacity may drop, as will be shown in Chapter 5. For simplicity, this book will use the term &ldquo;block&rdquo; to mean a logical block, and it will assume that a logical block contains 1K bytes of data unless explicitly stated otherwise.</p>
+
+<p><img src="/linux/img/bach/figure2.3.jpg" alt="figure 2.3" /></p>
+
+<p><strong>Figure 2.3.</strong> File System Layout</p>
+
+<p>A file system has the following structure (Figure 2.3).</p>
+
+<ul>
+<li>The <em>boot block</em> occupies the beginning of a file system, typically the first sector, and may contain the <em>bootstrap</em> code that is read into the machine to <em>boot</em>, or initialize, the operating system. Although only one boot block is needed to boot the system, every file system has a (possibly empty) boot block.</li>
+<li>The <em>super block</em> describes the state of a file system - how large it is, how many files it can store, where to find free space on the file system, and other information.</li>
+<li>The <em>inode list</em> is a list of inodes that follows the super block in the file system. Administrators specify the size of the inode list when configuring a file system. The kernel references inodes by index into the inode list. One inode is the <em>root inode</em> of the file system: it is the inode by which the directory structure of the file system is accessible after execution of the <em>mount</em> system call (Section 5.14).</li>
+<li>The data blocks start at the end of the inode list and contain file data and administrative data. An allocated data block can belong to one and only one file in the file system.</li>
+</ul>
+
+<h2 id="2-2-2-processes">2.2.2 Processes</h2>
+
+<p>This section examines the process subsystem more closely. It describes the structure of a process and some process data. structures used for memory management. Then it gives a preliminary view of the process state diagram and considers various issues involved in some state transitions.</p>
+
+<p>A process is the execution of a program and consists of a pattern of bytes that the CPU interprets as machine instructions (called &ldquo;text&rdquo;), data, and stack. Many processes appear to execute simultaneously as the kernel schedules them for execution, and several processes may be instances of one program. A process executes by following a strict sequence of instructions that is self-contained and does not jump to that of another process; it reads and writes its data and stack sections, but it cannot read or write the data and stack of other processes. Processes communicate with other processes and with the rest of the world via system calls.</p>
+
+<p>In practical terms, a process on a UNIX system is the entity that is created by the <em>fork</em> system call. Every process except <em>process 0</em> is created when another process executes the fork system call. The process that invoked the <em>fork</em> system call is the <em>parent</em> process, and the newly created process is the <em>child</em> process. Every process has one parent process, but a process can have many child processes. The kernel identifies each process by its process number, called the <em>process ID</em> (PID). Process 0 is a special process that is created &ldquo;by hand&rdquo; when the system boots; after forking a child process (process 1), process 0 becomes the <em>swapper</em> process. Process 1, known as <em>init</em>, is the ancestor of every other process in the system and enjoys a special relationship with them, as explained in Chapter 7.</p>
+
+<p>A user compiles the source code of a program to create an executable file, which consists of several parts:</p>
+
+<ul>
+<li>a set of &ldquo;headers&rdquo; that describe the attributes of the file,</li>
+<li>the program text,</li>
+<li>a machine language representation of data that has initial values when the program starts execution, and an indication of how much space the kernel should allocate for uninitialized data, called <em>bss</em><sup>2</sup> (the kernel initializes it to 0 at run time),</li>
+<li>other sections, such as symbol table information.</li>
+</ul>
+
+<p>For the program in Figure 1.3, the text of the executable file is the generated code for the functions main and copy, the initialized data is the variable version (put into the program just so that it should have some initialized data), and the uninitialized data is the array buffer. System V versions of the C compiler create a separate text section by default but support an option that allows inclusion of program instructions in the data section, used in older versions of the system.</p>
+
+<p>The kernel loads an executable file into memory during an <em>exec</em> system call, and the loaded process consists of at least three parts, called <em>regions</em>: text, data, and the stack. The text and data regions correspond to the text and data-bss sections of the executable file, but the stack region is automatically created and its size is dynamically adjusted by the kernel at run time. The stack consists of logical <em>stack frames</em> that are <em>pushed</em> when calling a function and <em>popped</em> when returning; a special register called the <em>stack pointer</em> indicates the current stack depth. A stack frame contains the parameters to a function, its local variables, and the data necessary to recover the previous stack frame, including the value of the program counter and stack pointer at the time of the function call. The program code contains instruction sequences that manage stack growth, and the kernel allocates space for the stack, as needed. In the program in Figure 1.3, parameters <em>argc</em> and <em>argv</em> and variables <em>fdold</em> and <em>fdnew</em> in the function <em>main</em> appear on the stack when <em>main</em> is called (once in every program, by convention), and parameters <em>old</em> and <em>new</em> and the variable <em>count</em> in the function <em>copy</em> appear on the stack whenever copy is called.</p>
+
+<p><img src="/linux/img/bach/figure2.4.jpg" alt="figure 2.4" /></p>
+
+<p><strong>Figure 2.4.</strong> User and Kernel Stack for Copy Program</p>
+
+<p>Because a process in the UNIX system can execute in two modes, kernel or user, it uses a separate stack for each mode. The user stack contains the arguments, local variables, and other data for functions executing in user mode. The left side of Figure 2.4 shows the user stack for a process when it makes the
+write system call in the <em>copy</em> program. The process startup procedure (included in a library) had called the function <em>main</em> with two parameters, pushing frame 1 onto the user stack; frame 1 contains space for the two local variables of <em>main</em>. <em>Main</em> then called <em>copy</em> with two parameters, <em>old</em> and <em>new</em>, and pushed frame 2 onto the user stack; frame 2 contains space for the local variable <em>count</em>. Finally, the process invoked the system call <em>write</em> by invoking the library function <em>write</em>. Each system call has an entry point in a system call library; the system call library is encoded in assembly language and contains special <em>trap</em> instructions, which, when executed, cause an &ldquo;interrupt&rdquo; that results in a hardware switch to kernel mode. A process calls the library entry point for a particular system call just as it calls any function, creating a stack frame for the library function. When the process executes the special instruction, it switches mode to the kernel, executes kernel code, and uses the kernel stack.</p>
+
+<p>The kernel stack contains the stack frames for functions executing in kernel mode. The function and data entries on the kernel stack refer to functions and data in the kernel, not the user program, but its construction is the same as that of the user stack. The kernel stack of a process is null when the process executes in user mode. The right side of Figure 2.4 depicts the kernel stack representation for a process executing the <em>write</em> system call in the <em>copy</em> program. The names of the algorithms are described during the detailed discussion of the <em>write</em> system call in later chapters.</p>
+
+<p><img src="/linux/img/bach/figure2.5.jpg" alt="figure 2.5" /></p>
+
+<p><strong>Figure 2.5.</strong> Data Structures for Processes</p>
+
+<p>Every process has an entry in the kernel <em>process table</em>, and each process is allocated a <em>u area</em><sup>3</sup> that contains private data manipulated only by the kernel. The process table contains (or points to) a <em>per process region table</em>, whose entries point to entries in a <em>region</em> table. A region is a contiguous area of a process&rsquo;s address space, such as text, data, and stack. Region table entries describe the attributes of the region, such as whether it contains text or data, whether it is shared or private, and where the &ldquo;data&rdquo; of the region is located in memory. The extra level of indirection (from the per process region table to the region table) allows independent processes to share regions. When a process invokes the <em>exec</em> system call, the kernel allocates regions for its text, data, and stack after freeing the old regions the process had been using. When a process invokes <em>fork</em>, the kernel duplicates the address space of the old process, allowing processes to share regions when possible and making a physical copy otherwise. When a process invokes <em>exit</em>, the kernel frees the regions the process had used. Figure 2.5 shows the relevant data structures of a running process: The process table points to a per process region table with pointers to the region table entries for the text, data, and stack regions of the process.</p>
+
+<p>The process table entry and the <em>u area</em> contain control and status information about the process. The <em>u area</em> is an extension of the process table entry, and Chapter 6 will examine the distinction between the two tables. Fields in the process table discussed in the following chapters are</p>
+
+<ul>
+<li>a state field,</li>
+<li>identifiers indicating the user who owns the process (user IDs, or UIDs),</li>
+<li>an event descriptor set when a process is suspended (in the <em>sleep</em> state).</li>
+</ul>
+
+<p>The <em>u area</em> contains information describing the process that needs to be accessible only when the process is executing. The important fields are</p>
+
+<ul>
+<li>a pointer to the process table slot of the currently executing process,</li>
+<li>parameters of the current system call, return values and error codes,</li>
+<li>file descriptors for all open files,</li>
+<li>internal I/O parameters,</li>
+<li>current directory and current root (see Chapter 5),</li>
+<li>process and file size limits.</li>
+</ul>
+
+<p>The kernel can directly access fields of the <em>u area</em> of the executing process but not of the <em>u area</em> of other processes. Internally, the kernel references the structure variable <em>u</em> to access the <em>u area</em> of the currently running process, and when another process executes, the kernel rearranges its virtual address space so that the structure <em>u</em> refers to the <em>u area</em> of the new process. The implementation gives the kernel an easy way to identify the current process by following the pointer from the <em>u area</em> to its process table entry.</p>
+
+<h3 id="2-2-2-1-context-of-a-process">2.2.2.1 Context of a process</h3>
+
+<p>The <em>context</em> of a process is its state, as defined by its text, the values of its global user variables and data structures, the values of machine registers it uses, the values stored in its process table slot and <em>u area</em>, and the contents of its user and kernel stacks. The text of the operating system and its global data structures are shared by all processes but do not constitute part of the context of a process.</p>
+
+<p>When executing a process, the system is said to be executing in the context of the process. When the kernel decides that it should execute another process, it does a <em>context switch</em>, so that the system executes in the context of the other process. The kernel allows a context switch only under specific conditions, as will be seen. When doing a context switch, the kernel saves enough information so that it can later switch back to the first process and resume its execution. Similarly, when moving from user to kernel mode, the kernel saves enough information so that it can later return to user mode and continue execution from where it left off. Moving between user and kernel mode is a change in mode, not a context switch. Recalling Figure 1.5, the kernel does a context switch when it changes context from process A to process B; it changes execution mode from user to kernel or from kernel to user, still executing in the context of one process, such as process A.</p>
+
+<p>The kernel services interrupts in the context of the interrupted process even though it may not have caused the interrupt. The interrupted process may have been executing in user mode or in kernel mode. The kernel saves enough information so that it can later resume execution of the interrupted process and services the interrupt in kernel mode. The kernel does not spawn or schedule a special process to handle interrupts.</p>
+
+<h3 id="2-2-2-2-process-states">2.2.2.2 Process states</h3>
+
+<p>The lifetime of a process can be divided into a set of <em>states</em>, each with certain characteristics that describe the process. Chapter 6 will describe all process states, but it is essential to understand the following states now:</p>
+
+<ol>
+<li>The process is currently executing in user mode.</li>
+<li>The process is currently executing in kernel mode.</li>
+<li>The process is not executing, but it is ready to run as soon as the scheduler chooses it. Many processes may be in this state, and the scheduling algorithm determines which one will execute next.</li>
+<li>The process is <em>sleeping</em>. A process puts itself to sleep when it can no longer continue executing, such as when it is waiting for I/O to complete.</li>
+</ol>
+
+<p>Because a processor can execute only one process at a time, at most one process may be in states 1 and 2. The two states correspond to the two modes of execution, user and kernel.</p>
+
+<h3 id="2-2-2-3-state-transitions">2.2.2.3 State transitions</h3>
+
+<p>The process states described above give a static view of a process, but processes move continuously between the states according to well-defined rules. A <em>state transition</em> diagram is a directed graph whose <em>nodes</em> represent the states a process can enter and whose <em>edges</em> represent the events that cause a process to move from one state to another. State transitions are legal between two states if there exists an edge from the first state to the second. Several transitions may emanate from a state, but a process will follow one and only one transition depending on the system event that occurs. Figure 2.6 shows the state transition diagram for the process states defined above.</p>
+
+<p><img src="/linux/img/bach/figure2.6.jpg" alt="figure 2.6" /></p>
+
+<p><strong>Figure 2.6.</strong> Process States and Transitions</p>
+
+<p>Several processes can execute simultaneously in a time-shared manner, as stated earlier, and they may all run simultaneously in kernel mode. If they were allowed to run in kernel mode without constraint, they could corrupt global kernel data structures. By prohibiting arbitrary context switches and controlling the occurrence of interrupts, the kernel protects its consistency.</p>
+
+<p>The kernel allows a context switch only when a process moves from the state &ldquo;kernel running&rdquo; to the state &ldquo;asleep in memory.&rdquo; Processes running in kernel mode cannot be preempted by other processes; therefore the kernel is sometimes said to be <em>non-preemptive</em>, although the system does preempt processes that are in user mode. The kernel maintains consistency of its data structures because it is non-preemptive, thereby solving the <em>mutual exclusion</em> problem - making sure that critical sections of code are executed by at most one process at a time.</p>
+
+<pre><code class="language-c">struct queue {
+
+} *bp, *bpl;
+bpl-&gt;forp = bp-&gt;forp;
+bpl-&gt;backp = bp;
+bp-&gt;forp = bpl;
+/* consider possible context switch here */
+bpl-&gt;forp-&gt;backp = bpl;
+</code></pre>
+
+<p><strong>Figure 2.7.</strong> Sample Code Creating Doubly Linked List</p>
+
+<p><img src="/linux/img/bach/figure2.8a.jpg" alt="figure 2.8a" /></p>
+
+<p>Placing bpl on doubly linked list</p>
+
+<p><img src="/linux/img/bach/figure2.8b.jpg" alt="figure 2.8b" /></p>
+
+<p><strong>Figure 2.8.</strong> Incorrect Linked List because of Context Switch</p>
+
+<p>For instance, consider the sample code in Figure 2.7 to put a data structure, whose address is in the pointer <em>bpl</em>, onto a doubly linked list after the structure whose address is in <em>bp</em>. If the system allowed a context switch while the kernel executed the code fragment, the following situation could occur. Suppose the kernel executes the code until the comment and then does a context switch. The doubly linked list is in an inconsistent state: the structure <em>bpl</em> is half on and half off the linked list. If a process were to follow the forward pointers, it would find <em>bpl</em> on the linked list, but if it were to follow the back pointers, it would not find <em>bpl</em> (Figure 2.8). If other processes were to manipulate the pointers on the linked list before the original process ran again, the structure of the doubly linked list
+could be permanently destroyed. The UNIX system prevents such situations by disallowing context switches when a process executes in kernel mode. If a process goes to sleep, thereby permitting a context switch, kernel algorithms are encoded to make sure that system data structures are in a safe, consistent state.</p>
+
+<p>A related problem that can cause inconsistency in kernel data is the handling of interrupts, which can change kernel state information. For example, if the kernel was executing the code in Figure 2.7 and received an interrupt when it reached the comment, the interrupt handler could corrupt the links if it manipulates the pointers, as illustrated earlier. To solve this problem, the system could prevent all interrupts while executing in kernel mode, but that would delay servicing of the interrupt, possibly hurting system throughput. Instead, the kernel raises the processor execution level to prevent interrupts when entering <em>critical</em> regions of code. A section of code is critical if execution of arbitrary interrupt handlers could result in consistency problems. For example, if a disk interrupt handler manipulates the buffer queues in the figure, the section of code where the kernel manipulates the buffer queues is a critical region of code with respect to the disk interrupt handler. Critical regions are small and infrequent so that system throughput is largely unaffected by their existence. Other operating systems solve this problem by preventing all interrupts when executing in system states or by using elaborate locking schemes to ensure consistency. Chapter 12 will return to this issue for multiprocessor systems, where the solution outlined here is insufficient.</p>
+
+<p>To review, the kernel protects its consistency by allowing a context switch only when a process puts itself to sleep and by preventing one process from changing the state of another process. It also raises the processor execution level around critical regions of code to prevent interrupts that could otherwise cause inconsistencies. The process scheduler periodically preempts processes executing in user mode so that processes cannot monopolize use of the CPU.</p>
+
+<h3 id="2-2-2-4-sleep-and-wakeup">2.2.2.4 Sleep and wakeup</h3>
+
+<p>A process executing in kernel mode has great autonomy in deciding what it is going to do in reaction to system events. Processes can communicate with each other and &ldquo;suggest&rdquo; various alternatives, but they make the final decision by themselves. As will be seen, there is a set of rules that processes obey when confronted with various circumstances, but each process ultimately follows these rules under its own initiative. For instance, when a process must temporarily suspend its execution (&ldquo;go to sleep&rdquo;), it does so of its own free will. Consequently, an interrupt handler cannot go to sleep, because if it could, the interrupted process would be put to sleep by default.</p>
+
+<p>Processes go to sleep because they are awaiting the occurrence of some event, such as waiting for I/O completion from a peripheral device, waiting for a process to exit, waiting for system resources to become available, and so on. Processes are said to <em>sleep on an event</em>, meaning that they are in the sleep state until the event occurs, at which time they wake up and enter the state &ldquo;ready to run.&rdquo; Many
+processes can simultaneously sleep on an event; when an event occurs, <em>all</em> processes sleeping on the event wake up because the event condition is no longer true. When a process wakes up, it follows the state transition from the &ldquo;sleep&rdquo; state to the &ldquo;ready-to-run&rdquo; state, where it is eligible for later scheduling; it does <em>not</em> execute immediately. Sleeping processes do not consume CPU resources: The kernel does not constantly check to see that a process is still sleeping but waits for the event to occur and awakens the process then.</p>
+
+<p>For example, a process executing in kernel mode must sometimes lock a data structure in case it goes to sleep at a later stage; processes attempting to manipulate the locked structure must check the lock and sleep if another process owns the lock. The kernel implements such locks in the following manner:</p>
+
+<pre><code class="language-text">while (condition is true)
+    sleep (event: the condition becomes false);
+set condition true;
+</code></pre>
+
+<p>It unlocks the lock and awakens all processes asleep on the lock in the following manner:</p>
+
+<pre><code class="language-text">set condition false;
+wakeup (event: the condition is false);
+</code></pre>
+
+<p>Figure 2.9 depicts a scenario where three processes, A, B, and C, contend for a locked buffer. The sleep condition is that the buffer is locked. The processes execute one at a time, find the buffer locked, and sleep on the event that the buffer becomes unlocked. eventually, the buffer is unlocked, and all processes wake up and enter the state &ldquo;ready to run.&rdquo; The kernel eventually chooses one process, say B, to execute. Process B executes the &ldquo;while&rdquo; loop, finds that the buffer is unlocked, sets the buffer lock, and proceeds. If process B later goes to sleep again before unlocking the buffer (waiting for completion of an I/O operation, for example), the kernel can schedule other processes to run. If it chooses process A, process A executes the &ldquo;while&rdquo; loop, finds that the buffer is locked, and goes to sleep again; process C may do the same thing. Eventually, process B awakens and unlocks the buffer, allowing either process A or C to gain access to the buffer. Thus, the &ldquo;while-sleep&rdquo; loop insures that at most one process can gain access to a resource.</p>
+
+<p><img src="/linux/img/bach/figure2.9.jpg" alt="figure 2.9" /></p>
+
+<p><strong>Figure 2.9.</strong> Multiple Processes Sleeping on a Lock</p>
+
+<p>Chapter 6 will present the algorithms for sleep and wakeup in greater detail. In the meantime, they should be considered &ldquo;atomic&rdquo;. A process enters the sleep state instantaneously and stays there until it wakes up. After it goes to sleep, the kernel schedules another process to run and switches context to it.</p>
+
+<hr />
+
+<ol>
+<li>The term <em>core</em> refers to primary memory of a machine, not to hardware technology.</li>
+<li>The name bss comes from an assembly pseudo-operator on the IBM 7090 machine, which stood for &ldquo;block started by symbol.&rdquo;</li>
+<li>The <em>u</em> in <em>u area</em> stands for &ldquo;user.&rdquo; Another name for the <em>u area</em> is <em>u block</em>; this book will always refer to it as the <em>u area</em>.</li>
+</ol>
+
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://docs.ginuerzh.xyz/linux/bach/02/01/" data-toggle="tooltip" data-placement="top" title="2.1 ARCHITECTURE OF THE UNIX OPERATING SYSTEM">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://docs.ginuerzh.xyz/linux/bach/02/03/" data-toggle="tooltip" data-placement="top" title="2.3 KERNEL DATA STRUCTURES">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://docs.ginuerzh.xyz/linux/">LINUX</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.40.1</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://docs.ginuerzh.xyz/linux/js/main.js"></script>
+<script src="https://docs.ginuerzh.xyz/linux/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://docs.ginuerzh.xyz/linux/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

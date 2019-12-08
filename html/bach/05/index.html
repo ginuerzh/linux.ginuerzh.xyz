@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>5 SYSTEM CALLS FOR THE FILE SYSTEM</title>
+  <meta property="og:title" content="5 SYSTEM CALLS FOR THE FILE SYSTEM" />
+  <meta name="twitter:title" content="5 SYSTEM CALLS FOR THE FILE SYSTEM" />
+  <meta name="description" content="The last chapter described the internal data structures for the file system and the algorithms that manipulate them. This chapter deals with system calls for the file system, using the concepts explored in the previous chapter. It starts with system calls for accessing existing files, such as open, read, write, lseek, and close, then presents system calls to create new files, namely, creat and mknod, and then examines the system calls that manipulate the inode or that maneuver through the file system: chdir, chroot, chown, chmod, stat, and fstat.">
+  <meta property="og:description" content="The last chapter described the internal data structures for the file system and the algorithms that manipulate them. This chapter deals with system calls for the file system, using the concepts explored in the previous chapter. It starts with system calls for accessing existing files, such as open, read, write, lseek, and close, then presents system calls to create new files, namely, creat and mknod, and then examines the system calls that manipulate the inode or that maneuver through the file system: chdir, chroot, chown, chmod, stat, and fstat.">
+  <meta name="twitter:description" content="The last chapter described the internal data structures for the file system and the algorithms that manipulate them. This chapter deals with system calls for the file system, using the concepts …">
+  <meta name="author" content=""/>
+  <meta property="og:image" content="https://docs.ginuerzh.xyz/linux/linux.jpg" />
+  <meta name="twitter:image" content="https://docs.ginuerzh.xyz/linux/linux.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://docs.ginuerzh.xyz/linux/bach/05/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="LINUX" />
+
+  <meta name="generator" content="Hugo 0.40.1" />
+  <link rel="canonical" href="https://docs.ginuerzh.xyz/linux/bach/05/" />
+  <link rel="alternate" href="https://docs.ginuerzh.xyz/linux/bach/05/index.xml" type="application/rss+xml" title="LINUX">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://docs.ginuerzh.xyz/linux/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://docs.ginuerzh.xyz/linux/css/highlight.min.css" /><link rel="stylesheet" href="https://docs.ginuerzh.xyz/linux/css/codeblock.css" />
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://docs.ginuerzh.xyz/linux/">LINUX</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li class="navlinks-container">
+              <a class="navlinks-parent" href="javascript:void(0)">Contents</a>
+              <div class="navlinks-children">
+                
+                  <a href="/linux/bach/">Bach</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li>
+              <a title="about" href="/linux/about/">about</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    <div class="avatar-container">
+      <div class="avatar-img-border">
+        
+          <a title="LINUX" href="https://docs.ginuerzh.xyz/linux/">
+            <img class="avatar-img" src="https://docs.ginuerzh.xyz/linux/linux.jpg" alt="LINUX" />
+          </a>
+        
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+
+
+    
+  <header class="header-section ">
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="page-heading">
+              <h1>5 SYSTEM CALLS FOR THE FILE SYSTEM</h1>
+              <hr class="small">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+    
+  <div class="container" role="main">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        
+          <div class="well">
+            <p>The last chapter described the internal data structures for the file system and the algorithms that manipulate them. This chapter deals with system calls for the file system, using the concepts explored in the previous chapter. It starts with system calls for accessing existing files, such as <em>open</em>, <em>read</em>, <em>write</em>, <em>lseek</em>, and <em>close</em>, then presents system calls to create new files, namely, <em>creat</em> and <em>mknod</em>, and then examines the system calls that manipulate the inode or that maneuver through the file system: <em>chdir</em>, <em>chroot</em>, <em>chown</em>, <em>chmod</em>, <em>stat</em>, and <em>fstat</em>. It investigates more advanced system calls: <em>pipe</em> and <em>dup</em> are important for the implementation of pipes in the shell; <em>mount</em> and <em>umount</em> extend the file system tree visible to users; <em>link</em> and <em>unlink</em> change the structure of the file system hierarchy. Then, it presents the notion of file system abstractions, allowing the support of various file systems as long as they conform to standard interfaces. The last section in the chapter covers file system maintenance. The chapter introduces three kernel data structures: the file table, with one entry allocated for every opened file in the system, the user file descriptor table, with one entry allocated for every file descriptor known to a process, and the mount table, containing information for every active file system.</p>
+
+<p>Figure 5.1 shows the relationship between the system calls and the algorithms described previously. It classifies the system calls into several categories, although some system calls appear in more than one category:</p>
+
+<ul>
+<li>System calls that return file descriptors for use in other system calls;</li>
+<li>System calls that use the <em>namei</em> algorithm to parse a path name;</li>
+<li>System calls that assign and free inodes, using algorithms <em>ialloc</em> and <em>ifree</em>;</li>
+<li>System calls that set or change the attributes of a file;</li>
+<li>System calls that do I/O to and from a process, using algorithms <em>alloc</em>, <em>free</em>, and the buffer allocation algorithms;</li>
+<li>System calls that change the structure of the file system;</li>
+<li>System calls that allow a process to change its view of the file system tree.</li>
+</ul>
+
+<p><img src="/linux/img/bach/figure5.1.jpg" alt="figure 5.1" /></p>
+
+<p><strong>Figure 5.1.</strong> File System Calls and Relation to Other Algorithms</p>
+
+          </div>
+        
+        <div class="posts-list">
+          
+            <article class="post-preview">
+              <a href="https://docs.ginuerzh.xyz/linux/bach/05/19/">
+                <h2 class="post-title">5.19 SUMMARY</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on October 10, 2018
+  
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  This chapter concludes the first part of the book, the explanation of the file system. It introduced three kernel tables: the user file descriptor table, the system file table, and the mount table. It described the algorithms for many system calls relating to the file system and their interaction. It introduced file system abstractions, which allow the UNIX system to support varied file system types. Finally, it described how fsck checks the consistency of the file system.
+                  <a href="https://docs.ginuerzh.xyz/linux/bach/05/19/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://docs.ginuerzh.xyz/linux/bach/05/18/">
+                <h2 class="post-title">5.18 FILE SYSTEM MAINTENANCE</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on October 10, 2018
+  
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  The kernel maintains consistency of the file system during normal operation. However, extraordinary circumstances such as a power failure may cause a system crash that leaves a file system in an inconsistent state: most of the data in the file system is acceptable for use, but some inconsistencies exist. The command fsck checks for such inconsistencies and repairs the file system if necessary. It accesses the file system by its block or raw interface (Chapter 10) and bypasses the regular file access methods.
+                  <a href="https://docs.ginuerzh.xyz/linux/bach/05/18/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://docs.ginuerzh.xyz/linux/bach/05/17/">
+                <h2 class="post-title">5.17 FILE SYSTEM ABSTRACTIONS</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on October 10, 2018
+  
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  Weinberger introduced file system types to support his network file system (see [Killian 84] for a brief description of this mechanism), and the latest release of System V supports a derivation of his scheme. File system types allow the kernel to support multiple file systems simultaneously, such as network file systems (Chapter 13) or even file systems of other operating systems. Processes use the usual UNIX system calls to access files, and the kernel maps a generic set of file operations into operations specific to each file system type.
+                  <a href="https://docs.ginuerzh.xyz/linux/bach/05/17/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://docs.ginuerzh.xyz/linux/bach/05/16/">
+                <h2 class="post-title">5.16 UNLINK</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on October 9, 2018
+  
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  The unlink system call removes a directory entry for a file. The syntax for the unlink call is
+unlink(pathname);  where pathname identifies the name of the file to be unlinked from the directory hierarchy. If a process unlinks a given file, no file is accessible by that name until another directory entry with that name is created. In the following code fragment, for example,
+unlink(&quot;myfile&quot;); fd = open(&quot;myfile&quot;, O_RDONLY);  the open call should fail, because the current directory no longer contains a file called myfile.
+                  <a href="https://docs.ginuerzh.xyz/linux/bach/05/16/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://docs.ginuerzh.xyz/linux/bach/05/15/">
+                <h2 class="post-title">5.15 LINK</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on October 9, 2018
+  
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  The link system call links a file to a new name in the file system directory structure, creating a new directory entry for an existing inode; The syntax for the link system call is
+link (source file name, target file name);  where source file name is the name of an existing file and target file name is the new (additional) name the file will have after completion of the link call.
+                  <a href="https://docs.ginuerzh.xyz/linux/bach/05/15/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://docs.ginuerzh.xyz/linux/bach/05/14/">
+                <h2 class="post-title">5.14 MOUNTING AND UNMOUNTING FILE SYSTEMS</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on October 8, 2018
+  
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  A physical disk unit consists of several logical sections, partitioned by the disk driver, and each section has a device file name. Processes can access data in a section by opening the appropriate device file name and then reading and writing the &ldquo;file,&rdquo; treating it as a sequence of disk blocks. Chapter 10 gives details on this interface. A section of a disk may contain a logical file system, consisting of a boot block, super block, inode list, and data blocks, as described in Chapter 2.
+                  <a href="https://docs.ginuerzh.xyz/linux/bach/05/14/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://docs.ginuerzh.xyz/linux/bach/05/13/">
+                <h2 class="post-title">5.13 DUP</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on October 8, 2018
+  
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  The dup system call copies a file descriptor into the first free slot of the user file descriptor table, returning the new file descriptor to the user. It works for all file types. The syntax of the system call is
+newfd = dup(fd);  where fd is the file descriptor being duped and newfd is the new file descriptor that references the file. Because dup duplicates the file descriptor, it increments the count of the corresponding file table entry, which now has one more file descriptor entry that points to it, For example, examination of the data structures depicted in Figure 5.
+                  <a href="https://docs.ginuerzh.xyz/linux/bach/05/13/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://docs.ginuerzh.xyz/linux/bach/05/12/">
+                <h2 class="post-title">5.12 PIPES</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on October 8, 2018
+  
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  Pipes allow transfer of data between processes in a first-in-first-out manner (FIFO) , and they also allow synchronization of process execution. Their implementation allows processes to communicate even though they do not know what processes are on the other end of the pipe. The traditional implementation of pipes uses the file system for data storage. There are two kinds of pipes: named pipes and, for lack of a better term, unnamed pipes, which are identical except for the way that a process initially accesses them.
+                  <a href="https://docs.ginuerzh.xyz/linux/bach/05/12/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://docs.ginuerzh.xyz/linux/bach/05/11/">
+                <h2 class="post-title">5.11 STAT AND FSTAT</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on October 8, 2018
+  
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  The system calls stat and fstat allow processes to query the status of files, returning information such as the file type, file owner, access permissions, file size, number of links, inode number, and file access times. The syntax for the system calls is
+stat(pathname, statbuffer); fstat(fd, statbuffer);  where pathname is a file name, fd is a file descriptor returned by a previous open call, and statbuffer is the address of a data structure in the user process that will contain the status information of the file on completion of the call.
+                  <a href="https://docs.ginuerzh.xyz/linux/bach/05/11/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+
+            </article>
+          
+            <article class="post-preview">
+              <a href="https://docs.ginuerzh.xyz/linux/bach/05/10/">
+                <h2 class="post-title">5.10 CHANGE OWNER AND CHANGE MODE</h2>
+
+                
+              </a>
+
+              <p class="post-meta">
+                <span class="post-meta">
+  
+  
+  <i class="fa fa-calendar-o"></i>&nbsp;Posted on October 8, 2018
+  
+  
+  
+</span>
+
+
+              </p>
+              <div class="post-entry">
+                
+                  Changing the owner or mode (access permissions) of a file are operations on the inode, not on the file per se. The syntax of the calls is
+chown(pathname, owner, group) chmod(pathname, mode)  To change the owner of a file, the kernel converts the file name to an inode using algorithm namei. The process owner must be superuser or match that of the file owner (a process cannot give away something that does not belong to it).
+                  <a href="https://docs.ginuerzh.xyz/linux/bach/05/10/" class="post-read-more">[Read More]</a>
+                
+              </div>
+
+              
+
+            </article>
+          
+        </div>
+        
+          <ul class="pager main-pager">
+            
+            
+              <li class="next">
+                <a href="/linux/bach/05/page/2/">Older Posts &rarr;</a>
+              </li>
+            
+          </ul>
+        
+      </div>
+    </div>
+  </div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://docs.ginuerzh.xyz/linux/">LINUX</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.40.1</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://docs.ginuerzh.xyz/linux/js/main.js"></script>
+<script src="https://docs.ginuerzh.xyz/linux/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://docs.ginuerzh.xyz/linux/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

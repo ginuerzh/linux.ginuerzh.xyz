@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>5.14 MOUNTING AND UNMOUNTING FILE SYSTEMS</title>
+  <meta property="og:title" content="5.14 MOUNTING AND UNMOUNTING FILE SYSTEMS" />
+  <meta name="twitter:title" content="5.14 MOUNTING AND UNMOUNTING FILE SYSTEMS" />
+  <meta name="description" content="A physical disk unit consists of several logical sections, partitioned by the disk driver, and each section has a device file name. Processes can access data in a section by opening the appropriate device file name and then reading and writing the &ldquo;file,&rdquo; treating it as a sequence of disk blocks. Chapter 10 gives details on this interface. A section of a disk may contain a logical file system, consisting of a boot block, super block, inode list, and data blocks, as described in Chapter 2.">
+  <meta property="og:description" content="A physical disk unit consists of several logical sections, partitioned by the disk driver, and each section has a device file name. Processes can access data in a section by opening the appropriate device file name and then reading and writing the &ldquo;file,&rdquo; treating it as a sequence of disk blocks. Chapter 10 gives details on this interface. A section of a disk may contain a logical file system, consisting of a boot block, super block, inode list, and data blocks, as described in Chapter 2.">
+  <meta name="twitter:description" content="A physical disk unit consists of several logical sections, partitioned by the disk driver, and each section has a device file name. Processes can access data in a section by opening the appropriate …">
+  <meta name="author" content=""/>
+  <meta property="og:image" content="https://docs.ginuerzh.xyz/linux/linux.jpg" />
+  <meta name="twitter:image" content="https://docs.ginuerzh.xyz/linux/linux.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://docs.ginuerzh.xyz/linux/bach/05/14/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="LINUX" />
+
+  <meta name="generator" content="Hugo 0.40.1" />
+  <link rel="canonical" href="https://docs.ginuerzh.xyz/linux/bach/05/14/" />
+  <link rel="alternate" href="https://docs.ginuerzh.xyz/linux/index.xml" type="application/rss+xml" title="LINUX">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://docs.ginuerzh.xyz/linux/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://docs.ginuerzh.xyz/linux/css/highlight.min.css" /><link rel="stylesheet" href="https://docs.ginuerzh.xyz/linux/css/codeblock.css" />
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://docs.ginuerzh.xyz/linux/">LINUX</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li class="navlinks-container">
+              <a class="navlinks-parent" href="javascript:void(0)">Contents</a>
+              <div class="navlinks-children">
+                
+                  <a href="/linux/bach/">Bach</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li>
+              <a title="about" href="/linux/about/">about</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    <div class="avatar-container">
+      <div class="avatar-img-border">
+        
+          <a title="LINUX" href="https://docs.ginuerzh.xyz/linux/">
+            <img class="avatar-img" src="https://docs.ginuerzh.xyz/linux/linux.jpg" alt="LINUX" />
+          </a>
+        
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+
+
+    
+  
+  
+  
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="bach-heading">
+              <h1>5.14 MOUNTING AND UNMOUNTING FILE SYSTEMS</h1>
+                
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        
+
+<p>A physical disk unit consists of several logical sections, partitioned by the disk driver, and each section has a device file name. Processes can access data in a section by <em>opening</em> the appropriate device file name and then <em>reading</em> and <em>writing</em> the &ldquo;file,&rdquo; treating it as a sequence of disk blocks. Chapter 10 gives details on this interface. A section of a disk may contain a logical file system, consisting of a boot block, super block, inode list, and data blocks, as described in Chapter 2. The mount system can connects the file system in a specified section of a disk to the existing file system hierarchy, and the <em>umount</em> system can disconnects a file system from the hierarchy. The <em>mount</em> system can thus allows users to access data in a disk section as a file system instead of a sequence of disk blocks.</p>
+
+<p>The syntax for the mount system can is</p>
+
+<pre><code class="language-c">mount(special pathname, directory pathname, options);
+</code></pre>
+
+<p>where <em>special pathname</em> is the name of the device special file of the disk section containing the file system to be mounted, <em>directory pathname</em> is the directory in the existing hierarchy where the file system will be mounted (called the <em>mount point</em>), and <em>options</em> indicate whether the file system should be mounted &ldquo;read-only&rdquo; (system calls such as <em>write</em> and <em>creat</em> that write the file system will fail). For example, if a process issues the system call</p>
+
+<pre><code class="language-c">mount(&quot;/dev/dsk1&quot;, &quot;/usr&quot;, 0);
+</code></pre>
+
+<p>the kernel attaches the file system contained in the portion of the disk called &ldquo;/dev/dsk1&rdquo; to directory &ldquo;/usr&rdquo; in the existing file system tree (see Figure 5.22). The file &ldquo;/dev/dsk1&rdquo; is a block special file, meaning that it is the name of a block device, typically a portion of a disk. The kernel assumes that the indicated portion of the disk contains a file system with a super block, inode list, and root inode. After completion of the <em>mount</em> system call, the root of the mounted file system is accessed by the name &ldquo;/usr&rdquo;. Processes can access files on the mounted file system and ignore the fact that it is detachable. Only the <em>link</em> system call checks the file system of a file, because System V does not allow file links to span multiple file systems (see Section 5.15).</p>
+
+<p><img src="/linux/img/bach/figure5.22.jpg" alt="figure 5.22" /></p>
+
+<p><strong>Figure 5.22.</strong> File System Tree Before and After Mount</p>
+
+<p>The kernel has a <em>mount table</em> with entries for every mounted file system. Each mount table entry contains</p>
+
+<ul>
+<li>a device number that identifies the mounted file system (this is the logical file system number mentioned previously);</li>
+<li>a pointer to a buffer containing the file system super block;</li>
+<li>a pointer to the root inode of the mounted file system (&ldquo;/&rdquo; of the &ldquo;/dev/dsk1&rdquo; file system in Figure 5.22);</li>
+<li>a pointer to the inode of the directory that is the mount point (&ldquo;usr&rdquo; of the root file system in Figure 5.22).</li>
+</ul>
+
+<p>Association of the mount point inode and the root inode of the mounted file system, set up during the <em>mount</em> system call, allows the kernel to traverse the file system hierarchy gracefully, without special user knowledge.</p>
+
+<pre><code class="language-text">algorithm mount
+inputs: file name of block special file
+        directory name of mount point
+        options (read only)
+output: none
+{
+    if (not super user)
+        return(error);
+    get inode for block special file (algorithm namei);
+    make legality checks;
+    get inode for &quot;mounted on&quot; directory name (algorithm namei);
+    if (not directory, or reference count &gt; 1)
+    {
+        release inodes (algorithm iput);
+        return (error);
+    }
+    find empty slot in mount table;
+    invoke block device driver open routine;
+    set free buffer from buffer cache;
+    read super block into free buffer;
+    initialize super block fields;
+    get root inode of mounted device (algorithm iget), save in mount table;
+    mark inode of &quot;mounted on&quot; directory as mount point;
+    release special file inode (algorithm iput);
+    unlock inode of mount point directory;
+}
+</code></pre>
+
+<p><strong>Figure 5.23.</strong> Algorithm for Mounting a File System</p>
+
+<p>Figure 5.23 depicts the algorithm for mounting a file system. The kernel only allows processes owned by a superuser to <em>mount</em> or <em>umount</em> file systems. Yielding permission for <em>mount</em> and <em>umount</em> to the entire user community would allow malicious (or not so malicious) users to wreak havoc on the file system. Super users should wreak havoc only by accident.</p>
+
+<p>The kernel finds the inode of the special file that represents the file system to be mounted, extracts the major and minor numbers that identify the appropriate disk section, and finds the inode of the directory on which the file system will be mounted. The reference count of the directory inode must not be greater than 1 (it must be at least 1 - why?), because of potentially dangerous side effects (see exercise 5.27). The kernel then allocates a free slot in the mount table, marks the slot in use, and assigns the device number field in the mount table. The above assignments are done immediately because the calling process could go to sleep in the ensuing device <em>open</em> procedure or in reading the file system super block; and another process could attempt to <em>mount</em> a file system. By having marked the mount table entry in use, the kernel prevents two <em>mounts</em> from using the same entry. By noting the device number of the attempted <em>mount</em> , the kernel can prevent other processes from <em>mounting</em> the same file system again, because strange things could happen if a double mount were allowed (see exercise 5.26).</p>
+
+<p>The kernel calls the <em>open</em> procedure for the block device containing the file system in the same way it invokes the procedure when opening the block device directly (Chapter 10). The device <em>open</em> procedure typically checks that the device is legal, sometimes initializing driver data structures and sending initialization commands to the hardware. The kernel then allocates a free buffer from the buffer pool (a variation of algorithm <em>getblk</em>) to hold the super block of the mounted file
+system and reads the super block using a variation of algorithm <em>read</em>. The kernel stores a pointer to the inode of the mounted-on directory of the original file tree to allow file path names containing &ldquo;..&rdquo; to traverse the mount point, as will be seen. It finds the root inode of the <em>mounted</em> file system and stores a pointer to the inode in the mount table. To the user, the mounted-on directory and the root of the mounted file system are logically equivalent, and the kernel establishes their equivalence by their coexistence in the mount table entry. Processes can no longer access the inode of the mounted-on directory.</p>
+
+<p>The kernel initializes fields in the file system super block. clearing the lock fields for the free block list and free inode list and setting the number of free inodes in the super block to 0. The purpose of the initializations is to minimize the danger of file system corruption when mounting the file system after a system crash: Making the kernel think that there are no free inodes in the super block forces algorithm <em>ialloc</em> to search the disk for free inodes. Unfortunately, if the linked list of free disk blocks is corrupt, the kernel does not fix the list internally (see Section 5.17 for file system maintenance). If the user <em>mounts</em> the file system <em>read-only</em> to disallow all write operations to the file system, the kernel sets a flag in the super block. Finally, the kernel marks the mounted-on inode as a mount point, so other processes can later identify it. Figure 5.24 depicts the various data structures at the conclusion of the <em>mount</em> call.</p>
+
+<p><img src="/linux/img/bach/figure5.24.jpg" alt="figure 5.24" /></p>
+
+<p><strong>Figure 5.24.</strong> Data Structures after Mount</p>
+
+<h2 id="5-14-1-crossing-mount-points-in-file-path-names">5.14.1 Crossing Mount Points in File Path Names</h2>
+
+<p>Let us reconsider algorithms <em>namei</em> and <em>iget</em> for the cases where a path name crosses a mount point. The two cases for crossing a mount point are: crossing from the mounted-on file system to the mounted file system (in the direction from the global system root towards a leaf node) and crossing from the mounted file system to the mounted-on file system. The following sequence of shell commands illustrates the two cases.</p>
+
+<pre><code class="language-bash">mount /dev/dsk1 /usr
+cd /usr/src/uts
+cd ../../..
+</code></pre>
+
+<p>The <em>mount</em> command invokes the <em>mount</em> system call after doing some consistency checks and mounts the file system in the disk section identified by &ldquo;/dev/dsk1&rdquo; onto the directory &ldquo;/usr&rdquo;. The first <em>cd</em> (change directory) command causes the shell to execute the <em>chdir</em> system call, and the kernel parses the path name, crossing the mount point at &ldquo;/usr&rdquo;. The second <em>cd</em> command results in the kernel parsing the path name and crossing the mount point at the third &ldquo;..&rdquo; in the path name.</p>
+
+<pre><code class="language-text">algorithm iget
+input:  file system inode number
+output: locked inode
+{
+    while (not done)
+    {
+        if (inode in inode cache)
+        {
+            if (inode locked)
+            {
+                sleep (event inode becomes unlocked);
+                continue;   /* loop */
+            }
+            /* special processing for mount points --- */
+            if (inode a mount point)
+            {
+                find mount table entry for mount point;
+                get new file system number from mount table;
+                use root inode number in search;
+                continue;   /* loop again */
+            }
+            if (inode on inode free list)
+                remove from free list;
+            increment inode reference count;
+            return (inode);
+        }
+
+        /* inode not in inode cache */
+        remove new inode from free list;
+        reset inode number and file system;
+        remove inode from old hash queue, place on new one;
+        read inode from disk (algorithm bread);
+        initialize inode (e.g. reference count to 1);
+        return inode;
+    }
+}
+</code></pre>
+
+<p><strong>Figure 5.25.</strong> Revised Algorithm for Accessing an Inode</p>
+
+<p>For the case of crossing the mount point from the mounted-on file system to the mounted file system, consider the revised algorithm for <em>iget</em> in Figure 5.25, which is identical to that of Figure 4.3, except that it checks if the inode is a mount point: If the inode is marked &ldquo;mounted-on,&rdquo; the kernel knows that it is a mount point. It finds the mount table entry whose mounted-on inode is the one just accessed and notes the device number of the mounted file system. Using the device number and the inode number for root, which is common to all file systems, it then accesses the root inode of the mounted device and returns that inode. In the first change directory example above, the kernel first accesses the inode for &ldquo;/usr&rdquo; in the mounted-on file system, finds that the inode is marked &ldquo;mounted-on,&rdquo; finds the root inode of the mounted file system in the mount table, and accesses the root inode of the mounted file system.</p>
+
+<pre><code class="language-text">algorithm namei     /* convert path name to inode */
+input:  path name
+output: locked inode
+{
+    if (path name starts from root)
+        working inode = root inode (algorithm iget);
+    else
+        working inode = current directory inode (algorithm iget);
+    while (there is more path name)
+    {
+        read next path name component from input;
+        verify that inode is of directory, permissions;
+        if (inode is of changed root and component is &quot;..&quot;)
+            continue;   /* loop */
+  component search:
+        read inode (directory) (algorithms bmap, bread, brelse);
+        if (component matches a directory entry)
+        {
+            get inode number for matched component;
+            if (found inode of root and working inode is root and component name is &quot;..&quot;)
+            {
+                /* crossing mount point */
+                get mount table entry for working inode;
+                release working inode (algorithm iput);
+                working inode = mounted on inode;
+                lock mounted on inode;
+                increment reference count of working inode;
+                go to component search (for &quot;..&quot;);
+            }
+            release working inode (algorithm iput);
+            working inode = inode for new inode number (algorithm iget);
+        }
+        else    /* component not in directory */
+            return (no inode);
+    }
+    return (working inode);
+}
+</code></pre>
+
+<p><strong>Figure 5.26.</strong> Revised Algorithm for Parsing a File Name</p>
+
+<p>For the second case of crossing the mount point from the mounted file system to the mounted-on file system, consider the revised algorithm for <em>namei</em> in Figure 5.26. It is similar to that of Figure 4.11. However, after finding the inode number for a path name component in a directory, the kernel checks if the inode number is the root inode of a file system. If it is, and if the inode of the current working inode is also root, and the path name component is dot-dot (&ldquo;..&rdquo;), the kernel identifies the inode as a mount point. It finds the mount table entry whose device number equals
+the device number of the last found inode, gets the inode of the mounted-on directory, and continues its search for dot-dot (&ldquo;..&rdquo;) using the mounted-on inode as the working inode. At the root of the file system, however, &ldquo;..&rdquo; is the root.</p>
+
+<p>In the example above (cd &ldquo;../../..&rdquo;), assume the starting current directory of the process is &ldquo;/usr/src/uts&rdquo;. When parsing the path name in <em>namei</em>, the starting working inode is the current directory. The kernel changes the working inode to that of &ldquo;/usr/src&rdquo; as a result of parsing the first &ldquo;..&rdquo; in the path name. Then, it parses the second &ldquo;..&rdquo; in the path name, finds the root inode of the (previously) mounted file system, &ldquo;usr&rdquo;, and makes it the working inode in <em>namei</em>. Finally, it parses the third &ldquo;..&rdquo; in the path name: It finds that the inode number for &ldquo;..&rdquo; is the root inode number, its working inode is the root inode, and &ldquo;..&rdquo; is the current path name component. The kernel finds the mount table entry for the &ldquo;usr&rdquo; mount point, releases the current working inode (the root of the &ldquo;usr&rdquo; file system) , and allocates the mounted-on inode (the inode for directory &ldquo;usr&rdquo; in the root file system) as the new working inode. It then searches the directory structures in the mounted-on &ldquo;/usr&rdquo; for &ldquo;..&rdquo; and finds the inode number for the root of the file system (&ldquo;/&rdquo;) . The <em>chdir</em> system call then completes as usual; the calling process is oblivious to the fact that it crossed a mount point.</p>
+
+<h2 id="5-14-2-unmounting-a-file-system">5.14.2 Unmounting a File System</h2>
+
+<p>The syntax for the <em>umount</em> system call is</p>
+
+<pre><code class="language-c">umount(special filename);
+</code></pre>
+
+<p>where <em>special filename</em> indicates the file system to be unmounted. When unmounting a file system (Figure 5.27), the kernel accesses the inode of the device to be unmounted, retrieves the device number for the special file, releases the inode (algorithm <em>iput</em>), and finds the mount table entry whose device number equals that of the special file. Before the kernel actually unmounts a file system, it makes sure that no files on that file system are still in use by searching the inode table for all files whose device number equals that of the file system being unmounted. Active
+files have a positive reference count and include files that are the current directory of some process, files with shared text that are currently being executed (Chapter 7), and open files that have not been closed. If any files from the file system are active, the <em>umount</em> call fails: if it were to succeed, the active files would be inaccessible.</p>
+
+<pre><code class="language-text">algorithm umount
+input:  special file name of file system to be unmounted
+output: none
+{
+    if (not super user)
+        return(error);
+    get inode of special file (algorithm namei);
+    extract major, minor number of device being unmounted;
+    get mount table entry, based on major, minor number, for unmounting file system;
+    release inode of special file (algorithm iput);
+    remove shared text entries from region table for files belonging to file system; /* chap 7xxx */
+    update super block, inodes, flush buffers;
+    if (files from file system still in use)
+        return(error);
+    get root inode of mounted file system from mount table;
+    lock inode;
+    release inode (algorithm iput);     /* iget was in mount */
+    invoke close routine for special device;
+    invalidate buffers in pool from unmounted file system;
+    get inode of mount point from mount table;
+    lock inode;
+    clear flag marking it as mount ooint;
+    release inode (algorithm iput);     /* iget in mount */
+    free buffer used for super block;
+    free mount table slot;
+}
+</code></pre>
+
+<p><strong>Figure 5.27.</strong> Algorithm for Unmounting a File System</p>
+
+<p>The buffer pool may still contain &ldquo;delayed write&rdquo; blocks that were not written to disk, so the kernel flushes them from the buffer pool. The kernel removes shared text entries that are in the region table but not operational (see Chapter 7 for detail), writes out all recently modified super blocks to disk, and updates the disk copy of all inodes that need updating. It would suffice for the kernel to update the disk blocks, super block, and inodes for the unmounting file system only, but for historical reasons it does so for all file systems. The kernel then releases the root inode of the mounted file system, held since its original access during the mount system call, and invokes the driver of the device that contains the file system to close the device. Afterwards, it goes through the buffers in the buffer cache and invalidates buffers for blocks on the now unmounted file system; there is no need to cache data in those blocks any longer. When invalidating the buffers, it moves the buffers to the beginning of the buffer free list, so that valid blocks remain in the buffer cache longer. It clears the &ldquo;mounted-on&rdquo; flag in the mounted-on inode set
+during the mount call and releases the inode. After marking the mount table entry free for general use, the <em>umount</em> call completes.</p>
+
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://docs.ginuerzh.xyz/linux/bach/05/13/" data-toggle="tooltip" data-placement="top" title="5.13 DUP">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://docs.ginuerzh.xyz/linux/bach/05/15/" data-toggle="tooltip" data-placement="top" title="5.15 LINK">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://docs.ginuerzh.xyz/linux/">LINUX</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.40.1</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://docs.ginuerzh.xyz/linux/js/main.js"></script>
+<script src="https://docs.ginuerzh.xyz/linux/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://docs.ginuerzh.xyz/linux/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

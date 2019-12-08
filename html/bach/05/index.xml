@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>5 SYSTEM CALLS FOR THE FILE SYSTEM on LINUX</title>
+    <link>https://docs.ginuerzh.xyz/linux/bach/05/</link>
+    <description>Recent content in 5 SYSTEM CALLS FOR THE FILE SYSTEM on LINUX</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 07 Oct 2018 13:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://docs.ginuerzh.xyz/linux/bach/05/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>5.19 SUMMARY</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/19/</link>
+      <pubDate>Wed, 10 Oct 2018 14:04:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/19/</guid>
+      <description>This chapter concludes the first part of the book, the explanation of the file system. It introduced three kernel tables: the user file descriptor table, the system file table, and the mount table. It described the algorithms for many system calls relating to the file system and their interaction. It introduced file system abstractions, which allow the UNIX system to support varied file system types. Finally, it described how fsck checks the consistency of the file system.</description>
+    </item>
+    
+    <item>
+      <title>5.18 FILE SYSTEM MAINTENANCE</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/18/</link>
+      <pubDate>Wed, 10 Oct 2018 13:56:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/18/</guid>
+      <description>The kernel maintains consistency of the file system during normal operation. However, extraordinary circumstances such as a power failure may cause a system crash that leaves a file system in an inconsistent state: most of the data in the file system is acceptable for use, but some inconsistencies exist. The command fsck checks for such inconsistencies and repairs the file system if necessary. It accesses the file system by its block or raw interface (Chapter 10) and bypasses the regular file access methods.</description>
+    </item>
+    
+    <item>
+      <title>5.17 FILE SYSTEM ABSTRACTIONS</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/17/</link>
+      <pubDate>Wed, 10 Oct 2018 13:48:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/17/</guid>
+      <description>Weinberger introduced file system types to support his network file system (see [Killian 84] for a brief description of this mechanism), and the latest release of System V supports a derivation of his scheme. File system types allow the kernel to support multiple file systems simultaneously, such as network file systems (Chapter 13) or even file systems of other operating systems. Processes use the usual UNIX system calls to access files, and the kernel maps a generic set of file operations into operations specific to each file system type.</description>
+    </item>
+    
+    <item>
+      <title>5.16 UNLINK</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/16/</link>
+      <pubDate>Tue, 09 Oct 2018 19:14:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/16/</guid>
+      <description>The unlink system call removes a directory entry for a file. The syntax for the unlink call is
+unlink(pathname);  where pathname identifies the name of the file to be unlinked from the directory hierarchy. If a process unlinks a given file, no file is accessible by that name until another directory entry with that name is created. In the following code fragment, for example,
+unlink(&amp;quot;myfile&amp;quot;); fd = open(&amp;quot;myfile&amp;quot;, O_RDONLY);  the open call should fail, because the current directory no longer contains a file called myfile.</description>
+    </item>
+    
+    <item>
+      <title>5.15 LINK</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/15/</link>
+      <pubDate>Tue, 09 Oct 2018 17:52:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/15/</guid>
+      <description>The link system call links a file to a new name in the file system directory structure, creating a new directory entry for an existing inode; The syntax for the link system call is
+link (source file name, target file name);  where source file name is the name of an existing file and target file name is the new (additional) name the file will have after completion of the link call.</description>
+    </item>
+    
+    <item>
+      <title>5.14 MOUNTING AND UNMOUNTING FILE SYSTEMS</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/14/</link>
+      <pubDate>Mon, 08 Oct 2018 11:48:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/14/</guid>
+      <description>A physical disk unit consists of several logical sections, partitioned by the disk driver, and each section has a device file name. Processes can access data in a section by opening the appropriate device file name and then reading and writing the &amp;ldquo;file,&amp;rdquo; treating it as a sequence of disk blocks. Chapter 10 gives details on this interface. A section of a disk may contain a logical file system, consisting of a boot block, super block, inode list, and data blocks, as described in Chapter 2.</description>
+    </item>
+    
+    <item>
+      <title>5.13 DUP</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/13/</link>
+      <pubDate>Mon, 08 Oct 2018 11:32:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/13/</guid>
+      <description>The dup system call copies a file descriptor into the first free slot of the user file descriptor table, returning the new file descriptor to the user. It works for all file types. The syntax of the system call is
+newfd = dup(fd);  where fd is the file descriptor being duped and newfd is the new file descriptor that references the file. Because dup duplicates the file descriptor, it increments the count of the corresponding file table entry, which now has one more file descriptor entry that points to it, For example, examination of the data structures depicted in Figure 5.</description>
+    </item>
+    
+    <item>
+      <title>5.12 PIPES</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/12/</link>
+      <pubDate>Mon, 08 Oct 2018 10:38:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/12/</guid>
+      <description>Pipes allow transfer of data between processes in a first-in-first-out manner (FIFO) , and they also allow synchronization of process execution. Their implementation allows processes to communicate even though they do not know what processes are on the other end of the pipe. The traditional implementation of pipes uses the file system for data storage. There are two kinds of pipes: named pipes and, for lack of a better term, unnamed pipes, which are identical except for the way that a process initially accesses them.</description>
+    </item>
+    
+    <item>
+      <title>5.11 STAT AND FSTAT</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/11/</link>
+      <pubDate>Mon, 08 Oct 2018 10:33:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/11/</guid>
+      <description>The system calls stat and fstat allow processes to query the status of files, returning information such as the file type, file owner, access permissions, file size, number of links, inode number, and file access times. The syntax for the system calls is
+stat(pathname, statbuffer); fstat(fd, statbuffer);  where pathname is a file name, fd is a file descriptor returned by a previous open call, and statbuffer is the address of a data structure in the user process that will contain the status information of the file on completion of the call.</description>
+    </item>
+    
+    <item>
+      <title>5.10 CHANGE OWNER AND CHANGE MODE</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/10/</link>
+      <pubDate>Mon, 08 Oct 2018 10:30:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/10/</guid>
+      <description>Changing the owner or mode (access permissions) of a file are operations on the inode, not on the file per se. The syntax of the calls is
+chown(pathname, owner, group) chmod(pathname, mode)  To change the owner of a file, the kernel converts the file name to an inode using algorithm namei. The process owner must be superuser or match that of the file owner (a process cannot give away something that does not belong to it).</description>
+    </item>
+    
+    <item>
+      <title>5.9 CHANGE DIRECTORY AND CHANGE ROOT</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/09/</link>
+      <pubDate>Sun, 07 Oct 2018 17:53:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/09/</guid>
+      <description>When the system is first booted, process 0 makes the file system root its current directory during initialization. It executes the algorithm iget on the root inode, saves it in the u area as its current directory, and releases the inode lock. When a new process is created via the fork system call, the new process inherits the current directory of the old process in its u area, and the kernel increments the inode reference count accordingly.</description>
+    </item>
+    
+    <item>
+      <title>5.8 CREATION OF SPECIAL FILES</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/08/</link>
+      <pubDate>Sun, 07 Oct 2018 17:40:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/08/</guid>
+      <description>The system call mknod creates special files in the system, including named pipes, device files, and directories. It is similar to creat in that the kernel allocates an inode for the file. The syntax of the mknod system call is
+mknod(pathname, type and permissions, dev)  where pathname is the name of the node to be created, type and permissions give the node type (directory, for example) and access permissions for the new file to be created, and dev specifies the major and minor device numbers for block and character special files (Chapter 10).</description>
+    </item>
+    
+    <item>
+      <title>5.7 FILE CREATION</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/07/</link>
+      <pubDate>Sun, 07 Oct 2018 17:02:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/07/</guid>
+      <description>The open system call gives a process access to an existing file, but the creat system call creates a new file in the system. The syntax for the creat system call is
+fd = creat(pathname, modes);  where the variables pathname, modes, and fd mean the same as they do in the open svstem call. If no such file previously existed, the kernel creates a new file with the specified name and permission modes; if the file already existed, the kernel truncates the file (releases all existing data blocks and sets the file size to 0) subject to suitable file access permissions.</description>
+    </item>
+    
+    <item>
+      <title>5.6 CLOSE</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/06/</link>
+      <pubDate>Sun, 07 Oct 2018 16:48:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/06/</guid>
+      <description>A process closes an open file when it no longer wants to access it. The syntax for the close system call is
+close(fd);  where fd is the file descriptor for the open file. The kernel does the close operation by manipulating the file descriptor and the corresponding file table and inode table entries. If the reference count of the file table entry is greater than 1 because of dup or fork calls, then other user file descriptors reference the file table entry, as will be seen; the kernel decrements the count and the close completes.</description>
+    </item>
+    
+    <item>
+      <title>5.5 ADJUSTING THE POSITION OF FILE I/O - LSEEK</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/05/</link>
+      <pubDate>Sun, 07 Oct 2018 16:42:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/05/</guid>
+      <description>The ordinary use of read and write system calls provides sequential access to a file, but processes can use the lseek system call to position the I/O and allow random access to a file. The syntax for the system call is
+position = lseek(fd, offset, reference);  where fd is the file descriptor identifying the file, offset is a byte offset, and reference indicates whether offset should be considered from the beginning of the file, from the current position of the read/write offset, or from the end of the file.</description>
+    </item>
+    
+    <item>
+      <title>5.4 FILE AND RECORD LOCKING</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/04/</link>
+      <pubDate>Sun, 07 Oct 2018 16:38:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/04/</guid>
+      <description>The original UNIX system developed by Thompson and Ritchie did not have an internal mechanism by which a process could insure exclusive access to a file. A locking mechanism was considered unnecessary because, as Ritchie notes, &amp;ldquo;we are not faced with large, single-file databases maintained by independent processes&amp;rdquo; (see [Ritchie 81]). To make the UNIX system more attractive to commercial users with database applications, System V now contains file and record locking mechanisms.</description>
+    </item>
+    
+    <item>
+      <title>5.3 WRITE</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/03/</link>
+      <pubDate>Sun, 07 Oct 2018 16:28:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/03/</guid>
+      <description>The syntax for the write system call is
+number = write(fd, buffer, count);  where the meaning of the variables fd, buffer, count, and number are the same as they are for the read system call. The algorithm for writing a regular file is similar to that for reading a regular file. However, if the file does not contain a block that corresponds to the byte offset to be written, the kernel allocates a new block using algorithm alloc and assigns the block number to the correct position in the inode&amp;rsquo;s table of contents.</description>
+    </item>
+    
+    <item>
+      <title>5.2 READ</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/02/</link>
+      <pubDate>Sun, 07 Oct 2018 14:10:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/02/</guid>
+      <description>The syntax of the read system call is
+number = read(fd, buffer, count)  where fd is the file descriptor returned by open, buffer is the address of a data structure in the user process that will contain the read data on successful completion of the call, count is the number of bytes the user wants to read, and number is the number of bytes actually read. Figure 5.5 depicts the algorithm read for reading a regular file.</description>
+    </item>
+    
+    <item>
+      <title>5.1 OPEN</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/01/</link>
+      <pubDate>Sun, 07 Oct 2018 13:40:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/01/</guid>
+      <description>The open system call is the first step a process must take to access the data in a file. The syntax for the open system call is
+fd = open(pathname, flags, modes);  where pathname is a file name, flags indicate the type of open (such as for reading or writing) , and modes give the file permissions if the file is being created. The open system call returns an integer1 called the user file descriptor.</description>
+    </item>
+    
+  </channel>
+</rss>

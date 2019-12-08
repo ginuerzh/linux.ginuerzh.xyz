@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>5.1 OPEN</title>
+  <meta property="og:title" content="5.1 OPEN" />
+  <meta name="twitter:title" content="5.1 OPEN" />
+  <meta name="description" content="The open system call is the first step a process must take to access the data in a file. The syntax for the open system call is
+fd = open(pathname, flags, modes);  where pathname is a file name, flags indicate the type of open (such as for reading or writing) , and modes give the file permissions if the file is being created. The open system call returns an integer1 called the user file descriptor.">
+  <meta property="og:description" content="The open system call is the first step a process must take to access the data in a file. The syntax for the open system call is
+fd = open(pathname, flags, modes);  where pathname is a file name, flags indicate the type of open (such as for reading or writing) , and modes give the file permissions if the file is being created. The open system call returns an integer1 called the user file descriptor.">
+  <meta name="twitter:description" content="The open system call is the first step a process must take to access the data in a file. The syntax for the open system call is
+fd = open(pathname, flags, modes);  where pathname is a file name, flags …">
+  <meta name="author" content=""/>
+  <meta property="og:image" content="https://docs.ginuerzh.xyz/linux/linux.jpg" />
+  <meta name="twitter:image" content="https://docs.ginuerzh.xyz/linux/linux.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://docs.ginuerzh.xyz/linux/bach/05/01/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="LINUX" />
+
+  <meta name="generator" content="Hugo 0.40.1" />
+  <link rel="canonical" href="https://docs.ginuerzh.xyz/linux/bach/05/01/" />
+  <link rel="alternate" href="https://docs.ginuerzh.xyz/linux/index.xml" type="application/rss+xml" title="LINUX">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://docs.ginuerzh.xyz/linux/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://docs.ginuerzh.xyz/linux/css/highlight.min.css" /><link rel="stylesheet" href="https://docs.ginuerzh.xyz/linux/css/codeblock.css" />
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://docs.ginuerzh.xyz/linux/">LINUX</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li class="navlinks-container">
+              <a class="navlinks-parent" href="javascript:void(0)">Contents</a>
+              <div class="navlinks-children">
+                
+                  <a href="/linux/bach/">Bach</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li>
+              <a title="about" href="/linux/about/">about</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    <div class="avatar-container">
+      <div class="avatar-img-border">
+        
+          <a title="LINUX" href="https://docs.ginuerzh.xyz/linux/">
+            <img class="avatar-img" src="https://docs.ginuerzh.xyz/linux/linux.jpg" alt="LINUX" />
+          </a>
+        
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+
+
+    
+  
+  
+  
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="bach-heading">
+              <h1>5.1 OPEN</h1>
+                
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>The <em>open</em> system call is the first step a process must take to access the data in a file. The syntax for the <em>open</em> system call is</p>
+
+<pre><code class="language-c">fd = open(pathname, flags, modes);
+</code></pre>
+
+<p>where <em>pathname</em> is a file name, <em>flags</em> indicate the type of open (such as for reading or writing) , and <em>modes</em> give the file permissions if the file is being created. The <em>open</em> system call returns an integer<sup>1</sup> called the user <em>file descriptor</em>. Other file operations, such as reading, writing, seeking, duplicating the file descriptor, setting file I/O parameters, determining file status, and closing the file, use the file descriptor that the <em>open</em> system call returns.</p>
+
+<p>The kernel searches the file system for the file name parameter using algorithm <em>namei</em> (see Figure 5.2). It checks permissions for opening the file after it finds the in-core inode and allocates an entry in the file table for the open file. The file table entry contains a pointer to the inode of the open file and a field that indicates the byte offset in the file where the kernel expects the next <em>read</em> or <em>write</em> to begin. The kernel initializes the offset to 0 during the <em>open</em> call, meaning that the initial <em>read</em> or <em>write</em> starts at the beginning of a file by default. Alternatively, a process can open a file in <em>write-append</em> mode, in which case the kernel initializes the offset to the size of the file. The kernel allocates an entry in a private table in the process <em>u area</em>, called the user file descriptor table, and notes the index of this entry. The index is the file descriptor that is returned to the user. The entry in the user file table points to the entry in the global file table.</p>
+
+<pre><code class="language-text">algorithm open
+inputs: file name
+        type of open
+        file permissions (for creation type of open)
+output: file descriptor
+{
+    convert file name to inode (algorithm namei);
+    if (file does not exist or not permitted access)
+        return (error);
+    allocate file table entry for inode, initialize count, offset;
+    allocate user file descriptor entry, set pointer to file table entry;
+    if (type of open specifies truncate file)
+        free all file blocks (algorithm free);
+    unlock(inode); /* locked above in namei */
+    return(user file descriptor);
+}
+</code></pre>
+
+<p><strong>Figure 5.2.</strong> Algorithm for Opening a File</p>
+
+<p>Suppose a process executes the following code, opening the file &ldquo;/etc/passwd&rdquo; twice, once read-only and once write-only, and the file &ldquo;local&rdquo; once, for reading and writing.<sup>2</sup></p>
+
+<pre><code class="language-c">fd1 = open(&quot;/etc/passwd&quot;, O_RDONLY);
+fd2 = open(&quot;local&quot;, O_RDWR);
+fd3 = open(&quot;/etc/passwd&quot;, O_WRONLY);
+</code></pre>
+
+<p><img src="/linux/img/bach/figure5.3.jpg" alt="figure 5.3" /></p>
+
+<p><strong>Figure 5.3.</strong> Data Structures after Open</p>
+
+<p>Figure 5.3 shows the relationship between the inode table, file table, and user file descriptor data structures. Each <em>open</em> returns a file descriptor to the process, and the corresponding entry in the user file descriptor table points to a unique entry in the kernel file table even though one file (&ldquo;/etc/passwd&rdquo;) is opened twice. The file table entries of all instances of an open file point to one entry in the in-core inode table. The process can <em>read</em> or <em>write</em> the file &ldquo;/etc/passwd&rdquo; but only through tile descriptors 3 and 5 in the figure. The kernel notes the capability to read or write the file in the file table entry allocated during the <em>open</em> call. Suppose a second process executes the following code.</p>
+
+<pre><code class="language-c">fd1 = open(&quot;/etc/passwd&quot;, O_RDONLY);
+fd2 = open(&quot;private&quot;, O_RDONLY);
+</code></pre>
+
+<p><img src="/linux/img/bach/figure5.4.jpg" alt="figure 5.4" /></p>
+
+<p><strong>Figure 5.4.</strong> Data Structures after Two Processes Open Files</p>
+
+<p>Figure 5.4 shows the relationship between the appropriate data structures while both processes (and no others) have the files open. Again, each <em>open</em> call results in allocation of a unique entry in the user file descriptor table and in the kernel file table, but the kernel contains at most one entry per file in the in-core inode table.</p>
+
+<p>The user file descriptor table entry could conceivably contain the file offset for the position of the next I/O operation and point directly to the in-core inode entry for the file, eliminating the need for a separate kernel file table. The examples above show a one-to-one relationship between user file descriptor entries and kernel file table entries. Thompson notes, however, that he implemented the file table as a separate structure to allow sharing of the offset pointer between several user file descriptors (see page 1943 of [Thompson 78]). The <em>dup</em> and <em>fork</em> system calls, explained in Sections 5.13 and 7.1, manipulate the data structures to allow such sharing.</p>
+
+<p>The first three user file descriptors (0, 1, and 2) are called the <em>standard input</em>, <em>standard output</em>, and <em>standard error</em> file descriptors. Processes on UNIX systems conventionally use the standard input descriptor to read input data, the standard output descriptor to write output data, and the standard error descriptor to write error data (messages). Nothing in the operating system assumes that these file descriptors are special. A group of users could adopt the convention that file descriptors 4, 6, and 11 are special file descriptors, but counting from 0 (in C) is much more natural. Adoption of the convention by all user programs makes it easy for them to communicate via pipes, as will be seen in Chapter 7. Normally, the control terminal (see Chapter 10) serves as standard input, standard output and standard error.</p>
+
+<hr />
+
+<ol>
+<li>All system calls return the value -1 if they fail. The return value -1 will not be explicitly mentioned when discussing the syntax of the system calls.</li>
+<li>The definition of the <em>open</em> system call specifies three parameters (the third is used for the <em>create</em> mode of open), but programmers usually use only the first two. The C compiler does not check that the number of parameters is correct. System implementations typically pass the first two parameters and a third &ldquo;garbage&rdquo; parameter (whatever happens to be on the stack) to the kernel. The kernel does not check the third parameter unless the second parameter indicates that it must, allowing programmers to encode only two parameters.</li>
+</ol>
+
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+          
+            <li class="next">
+              <a href="https://docs.ginuerzh.xyz/linux/bach/05/02/" data-toggle="tooltip" data-placement="top" title="5.2 READ">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://docs.ginuerzh.xyz/linux/">LINUX</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.40.1</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://docs.ginuerzh.xyz/linux/js/main.js"></script>
+<script src="https://docs.ginuerzh.xyz/linux/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://docs.ginuerzh.xyz/linux/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

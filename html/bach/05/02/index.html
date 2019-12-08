@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>5.2 READ</title>
+  <meta property="og:title" content="5.2 READ" />
+  <meta name="twitter:title" content="5.2 READ" />
+  <meta name="description" content="The syntax of the read system call is
+number = read(fd, buffer, count)  where fd is the file descriptor returned by open, buffer is the address of a data structure in the user process that will contain the read data on successful completion of the call, count is the number of bytes the user wants to read, and number is the number of bytes actually read. Figure 5.5 depicts the algorithm read for reading a regular file.">
+  <meta property="og:description" content="The syntax of the read system call is
+number = read(fd, buffer, count)  where fd is the file descriptor returned by open, buffer is the address of a data structure in the user process that will contain the read data on successful completion of the call, count is the number of bytes the user wants to read, and number is the number of bytes actually read. Figure 5.5 depicts the algorithm read for reading a regular file.">
+  <meta name="twitter:description" content="The syntax of the read system call is
+number = read(fd, buffer, count)  where fd is the file descriptor returned by open, buffer is the address of a data structure in the user process that will …">
+  <meta name="author" content=""/>
+  <meta property="og:image" content="https://docs.ginuerzh.xyz/linux/linux.jpg" />
+  <meta name="twitter:image" content="https://docs.ginuerzh.xyz/linux/linux.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://docs.ginuerzh.xyz/linux/bach/05/02/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="LINUX" />
+
+  <meta name="generator" content="Hugo 0.40.1" />
+  <link rel="canonical" href="https://docs.ginuerzh.xyz/linux/bach/05/02/" />
+  <link rel="alternate" href="https://docs.ginuerzh.xyz/linux/index.xml" type="application/rss+xml" title="LINUX">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://docs.ginuerzh.xyz/linux/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://docs.ginuerzh.xyz/linux/css/highlight.min.css" /><link rel="stylesheet" href="https://docs.ginuerzh.xyz/linux/css/codeblock.css" />
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://docs.ginuerzh.xyz/linux/">LINUX</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li class="navlinks-container">
+              <a class="navlinks-parent" href="javascript:void(0)">Contents</a>
+              <div class="navlinks-children">
+                
+                  <a href="/linux/bach/">Bach</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li>
+              <a title="about" href="/linux/about/">about</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    <div class="avatar-container">
+      <div class="avatar-img-border">
+        
+          <a title="LINUX" href="https://docs.ginuerzh.xyz/linux/">
+            <img class="avatar-img" src="https://docs.ginuerzh.xyz/linux/linux.jpg" alt="LINUX" />
+          </a>
+        
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+
+
+    
+  
+  
+  
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="bach-heading">
+              <h1>5.2 READ</h1>
+                
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>The syntax of the <em>read</em> system call is</p>
+
+<pre><code class="language-c">number = read(fd, buffer, count)
+</code></pre>
+
+<p>where <em>fd</em> is the file descriptor returned by <em>open</em>, <em>buffer</em> is the address of a data structure in the user process that will contain the read data on successful completion of the call, <em>count</em> is the number of bytes the user wants to read, and number is the number of bytes actually read. Figure 5.5 depicts the algorithm <em>read</em> for reading a regular file.</p>
+
+<pre><code class="language-text">algorithm read
+input:  user file descriptor
+        address of buffer in user process
+        number of bytes to read
+output: count of bytes copied into user space
+{
+    get file table entry from user file descriptor;
+    check file accessibility;
+    set parameters in u area for user address, byte count, I/O to user;
+    get inode from file table;
+    lock inode;
+    set byte offset in u area from file table offset;
+    while (count not satisfied)
+    {
+        convert file offset to disk block (algorithm bmap);
+        calculate offset into block, number of bytes to read;
+        if (number of bytes to read is 0)
+            /* trying to read end of file */
+            break; /* out of loop */
+        read block (algorithm breada if with read ahead, algorithm bread otherwise);
+        copy data from system buffer to user address;
+        update u area fields for file byte offset, read count, address to write into user space;
+        release buffer; /* locked in bread */
+    }
+    unlock inode;
+    update file table offset for next read;
+    return (total numbet of bytes read);
+}
+</code></pre>
+
+<p><strong>Figure 5.5.</strong> Algorithm for Reading a File</p>
+
+<p>The kernel gets the file table entry that corresponds to the user file descriptor, following the pointer in Figure 5.3. It now sets several I/O parameters in the <em>u area</em> (Figure 5.6), eliminating the need to pass them as function parameters. Specifically, it sets the I/O mode to indicate that a read is being done, a flag to indicate that the I/O will go to user address space, a count field to indicate the number of bytes to read, the target address of the user data buffer, and finally, an offset field (from the file table) to indicate the byte offset into the file where the I/O should begin. After the kernel sets the I/O parameters in the <em>u area</em>, it follows the pointer from the file table entry to the inode, locking the inode before it reads the file.</p>
+
+<pre><code class="language-text">mode        indicates read or write
+count       count of bytes to read or write
+offset      byte offset in file
+address     target address to copy data, in user or kernel memory
+flag        indicates if address is in user or kernel memory
+</code></pre>
+
+<p><strong>Figure 5.6.</strong> I/O Parameters Saved in U Area</p>
+
+<p>The algorithm now goes into a loop until the <em>read</em> is satisfied. The kernel converts the file byte offset into a block number, using algorithm <em>bmap</em>, and it notes the byte offset in the block where the I/O should begin and how many bytes in the block it should read. After reading the block into a buffer, possibly using block read ahead (algorithms <em>bread</em> and <em>breada</em>) as will be described, it copies the data from the block to the target address in the user process. It updates the I/O parameters in the <em>u area</em> according to the number of bytes it read, incrementing the file byte offset and the address in the user process where the next data should be delivered, and decrementing the count of bytes it needs to read to satisfy the user read request. If the user request is not satisfied, the kernel repeats the entire cycle, converting the file byte offset to a block number, reading the block from disk to a system buffer, copying data from the buffer to the user process, releasing the buffer, and updating I/O parameters in the <em>u area</em>. The cycle completes either when the kernel completely satisfies the user request, when the file contains no more data, or if the kernel encounters an error in reading the data from disk or in copying the data to user space. The kernel updates the offset in the file table according to the number of bytes it actually read; consequently, successive <em>reads</em> of a file deliver the file data in sequence. The <em>lseek</em> system call (Section 5.6) adjusts the value of the file table offset and changes the order in which a process <em>reads</em> or <em>writes</em> a file.</p>
+
+<pre><code class="language-c">#include &lt;fcntl.h&gt;
+main()
+{
+    int fd;
+    char lilbuf[20], bigbuf[1024];
+    fd = open(&quot;/etc/passwd&quot;, O_RDONLY);
+    read(fd, lilbuf, 20);
+    read(fd, bigbuf, 1024);
+    read(fd, lilbuf, 20);
+}
+</code></pre>
+
+<p><strong>Figure 5.7.</strong> Sample Program for Reading a File</p>
+
+<p>Consider the program in Figure 5.7. The <em>open</em> returns a file descriptor that the user assigns to the variable <em>fd</em> and uses in the subsequent <em>read</em> calls. In the <em>read</em> system call, the kernel verifies that the file descriptor parameter is legal, and that the process had previously <em>opened</em> the file for reading. It stores the values <em>lilbuf</em>, 20, and 0 in the <em>u area</em>, corresponding to the address of the user buffer, the byte count, and the starting byte offset in the file. It calculates that byte offset 0 is in the 0th block of the file and retrieves the entry for the 0th block in the inode. Assumiag such a block exists, the kernel reads the entire block of 1024 bytes into a buffer but copies only 20 bytes to the user address <em>lilbuf</em>. It increments the <em>u area</em> byte offset to 20 and decrements the count of data to read to 0. Since the <em>read</em> has been satisfied, the kernel resets the file table offset to 20, so that subsequent <em>reads</em> on the file descriptor will begin at byte 20 in the file, and the system call returns the number of bytes actually read, 20.</p>
+
+<p>For the second read call, the kernel again verifies that the descriptor is legal and that the process had <em>opened</em> the file for reading; because it has no way of knowing that the user <em>read</em> request is for the same file that was determined to be legal during the last <em>read</em>. It stores in the <em>u area</em> the user address <em>bigbuf</em>, the number of bytes the process wants to read, 1024, and the starting offset in the file, 20, taken from the file table. It converts the file byte offset to the correct disk block, as above, and reads the block. If the time between <em>read</em> calls is small, chances are good that the block will be in the buffer cache. But the kernel cannot satisfy the <em>read</em> request entirely from the buffer, because only 1004 out of the 1024 bytes for this request are in the buffer. So it copies the last 1004 bytes from the buffer into the user data structure <em>bigbuf</em> and updates the parameters in the <em>u area</em> to indicate that the next iteration of the read loop starts at byte 1024 in the file, that the data should be copied to byte position 1004 in <em>bigbuf</em>, and that the number of bytes to to satisfy the <em>read</em> request is 20.</p>
+
+<p>The kernel now cycles to the beginning of the loop in the read algorithm. It converts byte offset 1024 to logical block offset 1, looks up the second direct block number in the inode, and finds the correct disk block to read. It reads the block from the buffer cache, reading the block from disk if it is not in the cache. Finally, it copies 20 bytes from the buffer to the correct address in the user process. Before leaving the system call, the kernel sets the offset field in the file table entry to 1044, the byte offset that should be accessed next. For the last <em>read</em> call in the example, the kernel proceeds as in the first <em>read</em> call, except that it starts reading at byte 1044 in the file, finding that value in the offset field in the file table entry for the descriptor.</p>
+
+<p>The example shows how advantageous it is for I/O requests to start on file system block boundaries and to be multiples of the block size. Doing so allows the kernel to avoid an extra iteration in the <em>read</em> algorithm loop, with the consequent expense of accessing the inode to find the correct block number for the data and competing with other processes for access to the buffer pool. The standard I/O library was written to hide knowledge of the kernel buffer size from users; its use
+avoids the performance penalties inherent in processes that nibble at the file system inefficiently (see exercise 5.4).</p>
+
+<p>As the kernel goes through the <em>read</em> loop, it determines whether a file is subject to read-ahead: if a process <em>reads</em> two blocks sequentially, the kernel assumes that all subsequent <em>reads</em> will be sequential until proven otherwise. During each iteration through the loop, the kernel saves the next logical block number in the incore inode and, during the next iteration, compares the current logical block number to the value previously saved. If they are equal, the kernel calculates the physical block number for read-ahead and saves its value in the <em>u area</em> for use in the <em>breada</em> algorithm. Of course, if a process does not read to the end of a block, the kernel does not invoke read-ahead for the next block.</p>
+
+<p>Recall from Figure 4.9 that it is possible for some block numbers in an inode or in indirect blocks to have the value 0, even though later blocks have nonzero value. If a process attempts to <em>read</em> data from such a block, the kernel satisfies the request by allocating an arbitrary buffer in the <em>read</em> loop, clearing its contents to 0, and copying it to the user address. This case is different from the case where a process encounters the end of a file, meaning that no data was ever written to any location beyond the current point. When encountering end of file, the kernel returns no
+data to the process (see exercise 5.1).</p>
+
+<p>When a process invokes the <em>read</em> system call, the kernel locks the inode for the duration of the call. Afterwards, it could go to sleep reading a buffer associated with data or with indirect blocks of the inode. If another process were allowed to change the file while the first process was sleeping, <em>read</em> could return inconsistent data. For example, a process may <em>read</em> several blocks of a file; if it slept while reading the first block and a second process were to <em>write</em> the other blocks, the returned data would contain a mixture of old and new data. Hence, the inode is left locked for the duration of the <em>read</em> call, affording the process a consistent view of the file as it existed at the start of the call.</p>
+
+<p>The kernel can preempt a reading process between system calls in user mode and schedule other processes to run. Since the inode is unlocked at the end of a system call, nothing prevents other processes from accessing the file and changing its contents. It would be unfair for the system to keep an inode locked from the time a process <em>opened</em> the file until it <em>closed</em> the file, because one process could keep a file open and thus prevent other processes from ever accessing it. If the file was &ldquo;/etc/passwd&rdquo;, used by the login process to check a user&rsquo;s password, then one malicious (or, perhaps, just errant) user could prevent all other users from logging in. To avoid such problems, the kernel unlocks the inode at the end of each system call that uses it. If another process changes the file between the two <em>read</em> system calls by the first process, the first process may <em>read</em> unexpected data, but the kernel data structures are consistent.</p>
+
+<pre><code class="language-c">#include &lt;fcntl.h&gt;
+/* process A */
+main()
+{
+    int fd;
+    char buf[512];
+    fd = open(&quot;/etc/passwd&quot;, O_RDONLY);
+    read(fd, buf, sizeof(buf)); /* read1 */
+    read(fd, buf, sizeof(buf)); /* read2 */
+}
+
+/* process B */
+main()
+{
+    int fd, i;
+    char buf[512];
+    for (i = 0; i &lt; sizeof(buf); i++)
+        buf[i] = 'a';
+    fd = open(&quot;/etc/passwd&quot;, O_WRONLY);
+    write(fd, buf, sizeof(buf)); /* write1 */
+    write(fd, buf, sizeof(buf)); /* write2 */
+}
+</code></pre>
+
+<p><strong>Figure 5.8.</strong> A Reader and a Writer Process</p>
+
+<p>For example, suppose the kernel executes the two processes in Figure 5.8 concurrently. Assuming both processes complete their <em>open</em> calls before either one starts its <em>read</em> or <em>write</em> calls, the kernel could execute the <em>read</em> and <em>write</em> calls in any of six sequences: <em>read1</em>, <em>read2</em>, <em>write1</em>, <em>write2</em>, or <em>read1</em>, <em>write1</em>, <em>read2</em>, <em>write2</em>, or <em>read1</em>, <em>write1</em>, <em>write2</em>, <em>read2</em>, and so on. The data that process A <em>reads</em> depends on the order that the system executes the system calls of the two processes; the system does not guarantee that the data in the file remains the same after <em>opening</em> the file. Use of the <em>file and record locking</em> feature (Section 5.4) allows a process to guarantee file consistency while it has a file <em>open</em>.</p>
+
+<pre><code class="language-c">#include &lt;fcntl.h&gt;
+main()
+{
+    int fd1, fd2;
+    char buf1[512], buf2[512];
+    fd1 = open(&quot;/etc/passwd&quot;, O_RDONLY);
+    fd2 = open(&quot;/etc/passwd&quot;, O_RDONLY);
+    read(fd1, buf1, sizeof(buf1));
+    read(fd2, buf2, sizeof(buf2));
+}
+</code></pre>
+
+<p><strong>Figure 5.9.</strong> Reading a File via Two File Descriptors</p>
+
+<p>Finally, the program in Figure 5.9 shows how a process can <em>open</em> a file more than once and <em>read</em> it via different file descriptors. The kernel manipulates the file table offsets associated with the two file descriptors independently, and hence, the arrays <em>buf1</em> and <em>buf2</em> should be identical when the process completes, assuming no other process <em>writes</em> &ldquo;/etc/passwd&rdquo; in the meantime.</p>
+
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://docs.ginuerzh.xyz/linux/bach/05/01/" data-toggle="tooltip" data-placement="top" title="5.1 OPEN">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://docs.ginuerzh.xyz/linux/bach/05/03/" data-toggle="tooltip" data-placement="top" title="5.3 WRITE">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://docs.ginuerzh.xyz/linux/">LINUX</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.40.1</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://docs.ginuerzh.xyz/linux/js/main.js"></script>
+<script src="https://docs.ginuerzh.xyz/linux/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://docs.ginuerzh.xyz/linux/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

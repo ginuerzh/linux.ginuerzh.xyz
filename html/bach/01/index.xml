@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>1 GENERAL OVERVIEW OF THE SYSTEM on LINUX</title>
+    <link>https://docs.ginuerzh.xyz/linux/bach/01/</link>
+    <description>Recent content in 1 GENERAL OVERVIEW OF THE SYSTEM on LINUX</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 27 Apr 2018 21:30:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://docs.ginuerzh.xyz/linux/bach/01/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>1.6 SUMMARY</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/01/06/</link>
+      <pubDate>Sun, 29 Apr 2018 11:45:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/01/06/</guid>
+      <description>This chapter has described the overall structure of the UNIX system, the relationship between processes running in user mode versus kernel mode, and the assumptions the kernel makes about the hardware. Processes execute in user mode or kernel mode, where they avail themselves of system services using a well-defined set of system calls. The system design encourages programmers to write small programs that do only a few operations but do them well, and then to combine the programs using pipes and I/O redirection to do more sophisticated processing.</description>
+    </item>
+    
+    <item>
+      <title>1.5 ASSUMPTIONS ABOUT HARDWARE</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/01/05/</link>
+      <pubDate>Sun, 29 Apr 2018 11:24:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/01/05/</guid>
+      <description>The execution of user processes on UNIX systems is divided into two levels: user and kernel. When a process executes a system call, the execution mode of the process changes from user mode to kernel mode: the operating system executes and attempts to service the user request, returning an error code if it fails. Even if the user makes no explicit requests for operating system services, the operating system still does bookkeeping operations that relate to the user process, handling interrupts, scheduling processes, managing memory, and so on.</description>
+    </item>
+    
+    <item>
+      <title>1.4 OPERATING SYSTEM SERVICES</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/01/04/</link>
+      <pubDate>Sun, 29 Apr 2018 11:12:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/01/04/</guid>
+      <description>Figure 1.1 depicts the kernel layer immediately below the layer of user application programs. The kernel performs various primitive operations on behalf of user processes to support the user interface described above. Among the services provided by the kernel are
+ Controlling the execution of processes by allowing their creation, termination or suspension, and communication Scheduling processes fairly for execution on the CPU. Processes share the CPU in a time-shared manner: the CPU5 executes a process, the kernel suspends it when its time quantum elapses, and the kernel schedules another process to execute.</description>
+    </item>
+    
+    <item>
+      <title>1.3 USER PERSPECTIVE</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/01/03/</link>
+      <pubDate>Sat, 28 Apr 2018 20:15:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/01/03/</guid>
+      <description>This section briefly reviews high-level features of the UNIX system such as the file system, the processing environment, and building block primitives (for example, pipes). Later chapters will explore kernel support of these features in detail.
+1.3.1 The File System The UNIX file system is characterized by
+ a hierarchical structure, consistent treatment of file data, the ability to create and delete files, dynamic growth of files, the protection of file data.</description>
+    </item>
+    
+    <item>
+      <title>1.2 SYSTEM STRUCTURE</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/01/02/</link>
+      <pubDate>Fri, 27 Apr 2018 22:20:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/01/02/</guid>
+      <description>Figure 1.1. Architecture of UNIX Systems
+Figure 1.1 depict the high-level architecture of the UNIX system. The hardware at the center of the diagram provides the operating system with basic services that will be described in Section 1.5. The operating system interacts directly3 with the hardware, providing common services to programs and insulating them from hardware idiosyncrasies. Viewing the system as a set of layers, the operating system is commonly called the system kernel, or just the kernel, emphasizing its isolation from user programs.</description>
+    </item>
+    
+    <item>
+      <title>1.1 HISTORY</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/01/01/</link>
+      <pubDate>Fri, 27 Apr 2018 21:40:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/01/01/</guid>
+      <description>In 1965, Bell Telephone Laboratories joined an effort with the General Electric Company and Project MAC of the Massachusetts Institute of Technology to develop a new operating system called Multics [Organick 72] The goals of the Multics system were to provide simultaneous computer access to a large community of users, to supply ample computation power and data storage, and to allow users to share their data easily, if desired. Many people who later took part in the early development of the UNIX system participated in the Multics work at Bell Laboratories.</description>
+    </item>
+    
+  </channel>
+</rss>

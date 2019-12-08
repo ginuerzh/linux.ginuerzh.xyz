@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>4 INTERNAL REPRESENTATION OF FILES on LINUX</title>
+    <link>https://docs.ginuerzh.xyz/linux/bach/04/</link>
+    <description>Recent content in 4 INTERNAL REPRESENTATION OF FILES on LINUX</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 09 May 2018 13:00:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://docs.ginuerzh.xyz/linux/bach/04/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>4.9 SUMMARY</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/04/09/</link>
+      <pubDate>Sun, 13 May 2018 20:47:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/04/09/</guid>
+      <description>The inode is the data structure that describes the attributes of a file, including the layout of its data on disk. There are two versions of the inode: the disk copy that stores the inode information when the file is not in use and the in-core copy that records information about active files. Algorithms ialloc and ifree control assignment of a disk inode to a file during the creat, mknod, pipe, and unlink system calls (next chapter), and the algorithms iget and iput control the allocation of in-core inodes when a process accesses a file.</description>
+    </item>
+    
+    <item>
+      <title>4.8 OTHER FILE TYPES</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/04/08/</link>
+      <pubDate>Sun, 13 May 2018 20:45:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/04/08/</guid>
+      <description>The UNIX system supports two other file types: pipes and special files. A pipe, sometimes called a fifo (for &amp;ldquo;first-in-first-out&amp;rdquo;), differs from a regular file in that its data is transient: Once data is read from a pipe, it cannot be read again. Also, the data is read in the order that it was written to the pipe, and the system allows no deviation from that order. The kernel stores data in a pipe the same way it stores data in an ordinary file, except that it uses only the direct blocks, not the indirect blocks.</description>
+    </item>
+    
+    <item>
+      <title>4.7 ALLOCATION OF DISK BLOCKS</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/04/07/</link>
+      <pubDate>Sun, 13 May 2018 20:14:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/04/07/</guid>
+      <description>When a process writes data to a file, the kernel must allocate disk blocks from the file system for direct data blocks and, sometimes, for indirect blocks. The file system super block contains an array that is used to cache the numbers of free disk blocks in the file system. The utility program mkfs (make file system) organizes the data blocks of a file system in a linked list, such that each link of the list is a disk block that contains an array of free disk block numbers, and one array entry is the number of the next block of the linked list.</description>
+    </item>
+    
+    <item>
+      <title>4.6 INODE ASSIGNMENT TO A NEW FILE</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/04/06/</link>
+      <pubDate>Sun, 13 May 2018 19:28:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/04/06/</guid>
+      <description>The kernel uses algorithm iget to allocate a known inode, one whose (file system and) inode number was previously determined. In algorithm namei for instance, the kernel determines the inode number by matching a path name component to a name in a directory. Another algorithm, ialloc, assigns a disk inode to a newly created file.
+The file system contains a linear list of inodes, as mentioned in Chapter 2. An inode is free if its type field is zero.</description>
+    </item>
+    
+    <item>
+      <title>4.5 SUPER BLOCK</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/04/05/</link>
+      <pubDate>Sun, 13 May 2018 19:25:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/04/05/</guid>
+      <description>So far, this chapter has described the structure of a file, assuming that the inode was previously bound to a file and that the disk blocks containing the data were already assigned. The next sections cover how the kernel assigns inodes and disk blocks. To understand those algorithms, let us examine the structure of the super block.
+The super block consists of the following fields:
+ the size of the file system, the number of free blocks in the file system, a list of free blocks available on the file system, the index of the next free block in the free block list, the size of the inode list, the number of free inodes in the file system, a list of free inodes in the file system, the index of the next free inode in the free inode list, lock fields for the free block and free inode lists, a flag indicating that the super block has been modified.</description>
+    </item>
+    
+    <item>
+      <title>4.4 CONVERSION OF A PATH NAME TO AN INODE</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/04/04/</link>
+      <pubDate>Sun, 13 May 2018 19:06:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/04/04/</guid>
+      <description>The initial access to a file is by its path name, as in the open, chdir (change directory), or link system calls. Because the kernel works internally with inodes rather than with path names, it converts the path names to inodes to access files. The algorithm namei parses the path name one component at a time, converting each component into an inode based on its name and the directory being searched, and eventually returns the inode of the input path name (Figure 4.</description>
+    </item>
+    
+    <item>
+      <title>4.3 DIRECTORIES</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/04/03/</link>
+      <pubDate>Sun, 13 May 2018 19:00:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/04/03/</guid>
+      <description>Recall from Chapter 1 that directories are the files that give the file system its hierarchical structure; they play an important role in conversion of a file name to an inode number: A directory is a file whose data is a sequence of entries, each consisting of an inode number and the name of a file contained in the directory. A path name is a null terminated character string divided into separate components by the slash (&amp;ldquo;/&amp;rdquo;) character.</description>
+    </item>
+    
+    <item>
+      <title>4.2 STRUCTURE OF A REGULAR FILE</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/04/02/</link>
+      <pubDate>Sat, 12 May 2018 15:13:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/04/02/</guid>
+      <description>As mentioned above, the inode contains the table of contents to locate a file&amp;rsquo;s data on disk. Since each block on a disk is addressable by number, the table of contents consists of a set of disk block numbers. If the data in a file were stored in a contiguous section of the disk (that is, the file occupied a linear sequence of disk blocks), then storing the start block address and the file size in the inode would suffice to access all the data in the file.</description>
+    </item>
+    
+    <item>
+      <title>4.1 INODES</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/04/01/</link>
+      <pubDate>Wed, 09 May 2018 13:11:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/04/01/</guid>
+      <description>4.1.1 Definition Inodes exist in a static form on disk, and the kernel reads them into an in-core inode to manipulate them. Disk inodes consist of the following fields:
+ File owner identifier. Ownership is divided between an individual owner and a &amp;ldquo;group&amp;rdquo; owner and defines the set of users who have access rights to a file. The superuser has access rights to all files in the system. File type.</description>
+    </item>
+    
+  </channel>
+</rss>

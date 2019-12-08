@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>1.3 USER PERSPECTIVE</title>
+  <meta property="og:title" content="1.3 USER PERSPECTIVE" />
+  <meta name="twitter:title" content="1.3 USER PERSPECTIVE" />
+  <meta name="description" content="This section briefly reviews high-level features of the UNIX system such as the file system, the processing environment, and building block primitives (for example, pipes). Later chapters will explore kernel support of these features in detail.
+1.3.1 The File System The UNIX file system is characterized by
+ a hierarchical structure, consistent treatment of file data, the ability to create and delete files, dynamic growth of files, the protection of file data.">
+  <meta property="og:description" content="This section briefly reviews high-level features of the UNIX system such as the file system, the processing environment, and building block primitives (for example, pipes). Later chapters will explore kernel support of these features in detail.
+1.3.1 The File System The UNIX file system is characterized by
+ a hierarchical structure, consistent treatment of file data, the ability to create and delete files, dynamic growth of files, the protection of file data.">
+  <meta name="twitter:description" content="This section briefly reviews high-level features of the UNIX system such as the file system, the processing environment, and building block primitives (for example, pipes). Later chapters will explore …">
+  <meta name="author" content=""/>
+  <meta property="og:image" content="https://docs.ginuerzh.xyz/linux/linux.jpg" />
+  <meta name="twitter:image" content="https://docs.ginuerzh.xyz/linux/linux.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://docs.ginuerzh.xyz/linux/bach/01/03/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="LINUX" />
+
+  <meta name="generator" content="Hugo 0.40.1" />
+  <link rel="canonical" href="https://docs.ginuerzh.xyz/linux/bach/01/03/" />
+  <link rel="alternate" href="https://docs.ginuerzh.xyz/linux/index.xml" type="application/rss+xml" title="LINUX">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://docs.ginuerzh.xyz/linux/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://docs.ginuerzh.xyz/linux/css/highlight.min.css" /><link rel="stylesheet" href="https://docs.ginuerzh.xyz/linux/css/codeblock.css" />
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://docs.ginuerzh.xyz/linux/">LINUX</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li class="navlinks-container">
+              <a class="navlinks-parent" href="javascript:void(0)">Contents</a>
+              <div class="navlinks-children">
+                
+                  <a href="/linux/bach/">Bach</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li>
+              <a title="about" href="/linux/about/">about</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    <div class="avatar-container">
+      <div class="avatar-img-border">
+        
+          <a title="LINUX" href="https://docs.ginuerzh.xyz/linux/">
+            <img class="avatar-img" src="https://docs.ginuerzh.xyz/linux/linux.jpg" alt="LINUX" />
+          </a>
+        
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+
+
+    
+  
+  
+  
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="bach-heading">
+              <h1>1.3 USER PERSPECTIVE</h1>
+                
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        
+
+<p>This section briefly reviews high-level features of the UNIX system such as the file system, the processing environment, and building block primitives (for example, <em>pipes</em>). Later chapters will explore kernel support of these features in detail.</p>
+
+<h2 id="1-3-1-the-file-system">1.3.1 The File System</h2>
+
+<p>The UNIX file system is characterized by</p>
+
+<ul>
+<li>a hierarchical structure,</li>
+<li>consistent treatment of file data,</li>
+<li>the ability to create and delete files,</li>
+<li>dynamic growth of files,</li>
+<li>the protection of file data.</li>
+<li>the treatment of peripheral devices (such as terminals and tape units) as files.</li>
+</ul>
+
+<p>The file system is organized as a tree with a single root node called <em>root</em> (written &ldquo;/&rdquo;); every non-leaf node of the file system structure is a <em>directory</em> of files, and files at the leaf nodes of the tree are either <em>directories</em>, <em>regular files</em>, or <em>special</em> device files. The name of a file is given by a <em>path name</em> that describes how to locate the file in the file system hierarchy. A path name is a sequence of component names separated by slash characters; a component is a sequence of characters that designates a file name that is uniquely contained in the previous (directory) component. A full path name starts with a slash character and specifies a file that can be found by starting at the file system root and traversing the file tree, following the branches that lead to successive component names of the path name. Thus, the path names &ldquo;/etc/passwd&rdquo;, &ldquo;/bin/who&rdquo;, and &ldquo;/usr/src/cmd/who.c&rdquo; designate files in the tree shown in Figure 1.2, but &ldquo;/bin/passwd&rdquo; and &ldquo;/usr/src/date.c&rdquo; do not. A path name does not have to start from root but can be designated relative to the <em>current directory</em> of an executing process, by omitting the initial slash in the path name. Thus, starting from directory &ldquo;/dev&rdquo;, the path name
+&ldquo;tty01&rdquo; designates the file whose full path name is &ldquo;/dev/tty01&rdquo;.</p>
+
+<p><img src="/linux/img/bach/figure1.2.jpg" alt="figure 1.2" /></p>
+
+<p><strong>Figure 1.2.</strong> Sample File System Tree</p>
+
+<p>Programs in the UNIX system have no knowledge of the internal format in which the kernel stores file data, treating the data as an unformatted stream of bytes. Programs may interpret the byte stream as they wish, but the interpretation has no bearing on how the operating system stores the data. Thus, the syntax of accessing the data in a file is defined by the system and is identical for all programs, but the semantics of the data are imposed by the program. For example, the text formatting program <em>troff</em> expects to find &ldquo;new-line&rdquo; characters at the end of each line of text, and the system accounting program <em>acctcom</em> expects to find fixed length records. Both programs use the same system services to access the data in the file as a byte stream, and internally, they parse the stream into a suitable format. If either program discovers that the format is incorrect, it is responsible for taking the appropriate action.</p>
+
+<p>Directories are like regular files in this respect; the system treats the data in a directory as a byte stream, but the data contains the names of the files in the directory in a predictable format so that the operating system and programs such as <em>ls</em> (list the names and attributes of files) can discover the files in a directory.</p>
+
+<p>Permission to access a file is controlled by <em>access permissions</em> associated with the file. Access permissions can be set independently to control read, write, and execute permission for three classes of users: the file owner, a file group, and everyone else. Users may create files if directory access permissions allow it. The newly created files are leaf nodes of the file system directory structure.</p>
+
+<p>To the user, the UNIX system treats devices as if they were files. Devices, designated by special device files, occupy node positions in the file system directory structure. Programs access devices with the same syntax they use when accessing regular files; the semantics of reading and writing devices are to a large degree the same as reading and writing regular files. Devices are protected in the same way that regular files are protected: by proper setting of their (file) access permissions. Because device names look like the names of regular files and because the same operations work for devices and regular files, most programs do not have to know internally the types of files they manipulate.</p>
+
+<pre><code class="language-c">#include &lt;fcntl.h&gt;
+char buffer[2048];
+int version = 1;    /* Chapter 2 explains this */
+
+main(argc, argv)
+    int argc;
+    char *argv[];
+{
+    int fdold, fdnew;
+    if (argc != 3)
+    {
+        printf(&quot;need 2 arguments for copy program\n&quot;);
+        exit(1);
+    }
+    fdold = open(argv[1], O_RDONLY);    /* open source file read only */
+    if (fdold == -1)
+    {
+        printf(&quot;cannot open file %s\n&quot;, argv[1]);
+        exit(1);
+    }
+    fdnew = creat(argv[2], 0666);   /* create target file rw for all */
+    if (fdnew == -1) {
+        printf(&quot;cannot create file %s\n&quot;, argv[2]);
+        exit(1);
+    }
+    copy(fdold, fdnew);
+    exit(O);
+}
+
+copy(old, new)
+    int old, new;
+{
+    int count;
+    while ((count == read(old, buffer, sizeof(buffer))) &gt; 0)
+        write(new, buffer, count);
+}
+</code></pre>
+
+<p><strong>Figure 1.3.</strong> Program to Copy a File</p>
+
+<p>For example, consider the C program in Figure 1.3, which makes a new copy of an existing file. Suppose the name of the executable version of the program is <em>copy</em>. A user at a terminal invokes the program by typing</p>
+
+<pre><code class="language-bash">copy oldfile newfile
+</code></pre>
+
+<p>where <em>oldfile</em> is the name of the existing file and <em>newfile</em> is the name of the new file. The system invokes <em>main</em>, supplying <em>argc</em> as the number of parameters in the list <em>argv</em>, and initializing each member of the array <em>argv</em> to point to a user-supplied parameter. In the example above, <em>argc</em> is 3, <em>argv[0]</em> points to the character string <em>copy</em> (the program name is conventionally the 0th parameter), <em>argv[1]</em> points to the character string <em>oldfile</em>, and <em>argv[2]</em> points to the character string <em>newfile</em>. The
+program then checks that it has been invoked with the proper number of parameters. If so, it invokes the <em>open</em> system call &ldquo;read-only&rdquo; for the file <em>oldfile</em>, and if the system call succeeds, invokes the <em>creat</em> system call to create <em>newfile</em>. The permission modes on the newly created file will be 0666 (octal), allowing all users access to the file for reading and writing. All system calls return -1 on failure; if
+the <em>open</em> or <em>creat</em> calls fail, the program prints a message and calls the <em>exit</em> system call with return status 1, terminating its execution and indicating that something went wrong.</p>
+
+<p>The <em>open</em> and <em>creat</em> system calls return an integer called a <em>file descriptor</em>, which the program uses for subsequent references to the files. The program then calls the subroutine <em>copy</em>, which goes into a loop, invoking the <em>read</em> system call to read a buffer&rsquo;s worth of characters from the existing file, and invoking the <em>write</em> system call to write the data to the new file. The <em>read</em> system call returns the number of bytes read, returning 0 when it reaches the end of file. The program finishes the loop when it encounters the end of file, or when there is some error on the <em>read</em> system call (it does not check for <em>write</em> errors). Then it returns from <em>copy</em> and <em>exits</em> with return status 0, indicating that the program completed successfully.</p>
+
+<p>The program copies any files supplied to it as arguments, provided it has permission to <em>open</em> the existing file and permission to create the new file. The file can be a file of printable characters, such as the source code for the program, or it can contain unprintable characters, even the program itself. Thus, the two invocations</p>
+
+<pre><code class="language-bash">copy copy.c newcopy.c
+copy copy newcopy
+</code></pre>
+
+<p>both work. The old file can also be a directory. For instance,</p>
+
+<pre><code class="language-bash">copy . dircontents
+</code></pre>
+
+<p>copies the contents of the current directory, denoted by the name &ldquo;.&rdquo;, to a regular file, &ldquo;dircontents&rdquo;; the data in the new file is identical, byte for byte, to the contents of the directory, but the file is a regular file. (The system call <em>mknod</em> creates a new directory.) Finally, either file can be a device special file. For example,</p>
+
+<pre><code class="language-bash">copy /dev/tty terminalread
+</code></pre>
+
+<p>reads the characters typed at the terminal (the special file <em>/dev/tty</em> is the user&rsquo;s terminal) and copies them to the file <em>terminalread</em>, terminating only when the user types the character control-d. Similarly,</p>
+
+<pre><code class="language-bash">copy /dev/tty /dev/tty
+</code></pre>
+
+<p>reads characters typed at the terminal and copies them back.</p>
+
+<h2 id="1-3-2-processing-environment">1.3.2 Processing Environment</h2>
+
+<p>A <em>program</em> is an executable file, and a <em>process</em> is an instance of the program in execution. Many processes can execute simultaneously on UNIX systems (this feature is sometimes called multiprogramming or multitasking) with no logical limit to their number, and many instances of a program (such as <em>copy</em>) can exist simultaneously in the system. Various system calls allow processes to create new processes, terminate processes, synchronize stages of process execution, and control reaction to various events. Subject to their use of system calls, processes execute independently of each other.</p>
+
+<pre><code class="language-c">main(argc, argv)
+    int argc;
+    char *argv[];
+{
+    /* assume 2 args: source file and target file */
+    if (fork() == 0)
+        execl(&quot;copy&quot;, &quot;copy&quot;, argv[1], argv[2], 0);
+    wait((int *) 0);
+    printf(&quot;copy done\n&quot;);
+}
+</code></pre>
+
+<p><strong>Figure 1.4.</strong> Program that Creates a New Process to Copy Files</p>
+
+<p>For example, a process executing the program in Figure 1.4 executes the <em>fork</em> system call to create a new process. The new process, called the <em>child</em> process, gets a 0 return value from fork and invokes <em>execl</em> to execute the program copy (the program in Figure 1.3). The <em>execl</em> call overlays the address space of the child process with the file &ldquo;copy&rdquo;, assumed to be in the current directory, and runs the
+program with the user-supplied parameters. If the <em>execl</em> call succeeds, it never returns because the process executes in a new address space, as will be seen in Chapter 7. Meanwhile, the process that had invoked <em>fork</em> (the parent) receives a non-0 return from the call, calls <em>wait</em>, suspending its execution until copy finishes, prints the message &ldquo;copy done,&rdquo; and <em>exits</em> (every program <em>exits</em> at the end of its
+<em>main</em> function, as arranged by standard C program libraries that are linked during the compilation process). For example, if the name of the executable program is <em>run</em>, and a user invokes the program by</p>
+
+<pre><code class="language-bash">run oldfile newfile
+</code></pre>
+
+<p>the process copies &ldquo;oldfile&rdquo; to &ldquo;newfile&rdquo; and prints out the message. Although this program adds little to the &ldquo;copy&rdquo; program, it exhibits four major system calls used for process control: <em>fork</em>, <em>exec</em>, <em>wait</em>, and, discreetly, <em>exit</em>.</p>
+
+<p>Generally, the system calls allow users to write programs that do sophisticated operations, and as a result, the kernel of the UNIX system does not contain many functions that are part of the &ldquo;kernel&rdquo; in other systems. Such functions, including compilers and editors, are user-level programs in the UNIX system. The prime example of such a program is the <em>shell</em>, the command interpreter program that users typically execute after logging into the system. The shell interprets the first word of a <em>command line</em> as a <em>command</em> name: for many commands, the shell <em>forks</em> and the child process <em>execs</em> the command associated with the name, treating the remaining words on the command line as parameters to the command.</p>
+
+<p>The shell allows three types of commands. First, a command can be an executable file that contains object code produced by compilation of source code (a C program for example). Second, a command can be an executable file that contains a sequence of shell command lines. Finally, a command can be an internal
+shell command (instead of an executable file). The internal commands make the shell a programming language in addition to a command interpreter and include commands for looping (<em>for-in-do-done</em> and <em>while-do-done</em>), commands for conditional execution (<em>if-then-else-fi</em>), a &ldquo;case&rdquo; statement command, a command to change the current directory of a process (<em>cd</em>) , and several others. The shell syntax allows for pattern matching and parameter processing. Users execute commands without having to know their types.</p>
+
+<p>The shell searches for commands in a given sequence of directories, changeable by user request per invocation of the shell. The shell usually executes a command synchronously, waiting for the command to terminate before reading the next command line. However, it also allows asynchronous execution, where it reads the next command line and executes it without waiting for the prior command to terminate. Commands executed asynchronously are said to execute in the <em>background</em>. For example, typing the command</p>
+
+<pre><code class="language-bash">who
+</code></pre>
+
+<p>causes the system to execute the program stored in the file <em>/bin/who</em>,<sup>4</sup> which prints a list of people who are currently logged in to the system. While <em>who</em> executes, the shell waits for it to finish and then prompts the user for another command. By typing</p>
+
+<pre><code class="language-bash">who &amp;
+</code></pre>
+
+<p>the system executes the program <em>who</em> in the background, and the shell is ready to accept another command immediately.</p>
+
+<p>Every process executing in the UNIX system has an execution environment that includes a current directory. The current directory of a process is the start directory used for all path names that do not begin with the slash character. The user may execute the shell command <em>cd</em>, change directory, to move around the file system tree and change the current directory. The command line</p>
+
+<pre><code class="language-bash">cd /usr/src/uts
+</code></pre>
+
+<p>changes the shell&rsquo;s current directory to the directory &ldquo;/usr/src/uts&rdquo;. The command line</p>
+
+<pre><code class="language-bash">cd ../..
+</code></pre>
+
+<p>changes the shell&rsquo;s current directory to the directory that is two nodes &ldquo;closer&rdquo; to the root node: the component &ldquo;..&rdquo; refers to the <em>parent directory</em> of the current directory.</p>
+
+<p>Because the shell is a user program and not part of the kernel, it is easy to modify it and tailor it to a particular environment. For instance, users can use the C shell to provide a history mechanism and avoid retyping recently used commands, instead of the Bourne shell (named after its inventor, Steve Bourne), provided as part of the standard System V release. Or some users may be granted use only of a restricted shell, providing a scaled down version of the regular shell. The system can execute the various shells simultaneously. Users have the capability to execute many processes simultaneously, and processes can create other processes dynamically and synchronize their execution, if desired. These features provide users with a powerful execution environment. Although much of the power of the shell derives from its capabilities as a programming language and from its capabilities for pattern matching of arguments, this section concentrates on the process environment provided by the system via the shell. Other important shell features are beyond the scope of this book (see [Bourne 78] for a detailed description of the shell).</p>
+
+<h2 id="1-3-3-building-block-primitives">1.3.3 Building Block Primitives</h2>
+
+<p>As described earlier, the philosophy of the UNIX system is to provide operating system primitives that enable users to write small, modular programs that can be used as building blocks to build more complex programs. One such primitive visible to shell users is the capability to <em>redirect I/O</em>. Processes conventionally have access to three files: they read from their <em>standard input</em> file, write to their <em>standard output</em> file, and write error messages to their <em>standard error</em> file. Processes executing at a terminal typically use the terminal for these three files, but each may be &ldquo;redirected&rdquo; independently. For instance, the command line</p>
+
+<pre><code class="language-bash">ls
+</code></pre>
+
+<p>lists all files in the current directory on the standard output. but the command line</p>
+
+<pre><code class="language-bash">ls &gt; output
+</code></pre>
+
+<p>redirects the standard output to the file called &ldquo;output&rdquo; in the current directory, using the <em>creat</em> system call mentioned above. Similarly, the command line</p>
+
+<pre><code class="language-bash">mail mjb &lt; letter
+</code></pre>
+
+<p><em>opens</em> the file &ldquo;letter&rdquo; for its standard input and <em>mails</em> its contents to the user named &ldquo;mjb.&rdquo; Processes can redirect input and output simultaneously, as in</p>
+
+<pre><code class="language-bash">nroff -mm &lt; docl &gt; docl.out 2&gt; errors
+</code></pre>
+
+<p>where the text formatter <em>nroff</em> reads the input file <em>docl</em>, redirects its standard output to the file <em>docl.out</em>, and redirects error messages to the file <em>errors</em> (the notation &ldquo;2&gt;&rdquo; means to redirect the output for file descriptor 2, conventionally the standard error). The programs <em>ls</em>, <em>mail</em>, and <em>nroff</em> do not know what file their standard input, standard output, or standard error will be; the shell recognizes the symbols &ldquo; &lt; &ldquo;, &ldquo;&gt; &ldquo;, and &ldquo;2 &gt;&rdquo; and sets up the standard input, standard output, and standard error appropriately before executing the processes.</p>
+
+<p>The second building block primitive is the <em>pipe</em>, a mechanism that allows a stream of data to be passed between reader and writer processes. Processes can redirect their standard output to a pipe to be read by other processes that have redirected their standard input to come from the pipe. The data that the first processes write into the pipe is the input for the second processes. The second processes could also redirect their output, and so on, depending on programming need. Again, the processes need not know what type of file their standard output is; they work regardless of whether their standard output is a regular file, a pipe, or a device. When using the smaller programs as building blocks for a larger, more complex program, the programmer uses the pipe primitive and redirection of I/O to integrate the piece parts. Indeed, the system tacitly encourages such programming style so that new programs can work with existing programs.</p>
+
+<p>For example, the program <em>grep</em> searches a set of files (parameters to grep) for a given pattern:</p>
+
+<pre><code class="language-bash">grep main a.c b.c c.c
+</code></pre>
+
+<p>searches the three files a.c, b.c, and c.c for lines containing the string &ldquo;main&rdquo; and prints the lines that it finds onto standard output. Sample output may be:</p>
+
+<pre><code class="language-bash">a.c: main(argc, argv)
+c.c: /* here is the main loop in the program */
+c.c: main()
+</code></pre>
+
+<p>The program <em>wc</em> with the option -l counts the number of lines in the standard input file. The command line</p>
+
+<pre><code class="language-bash">grep main a.c b.c c.c | wc -l
+</code></pre>
+
+<p>counts the number of lines in the files that contain the string &ldquo;main&rdquo;; the output from <em>grep</em> is &ldquo;piped&rdquo; directly into the <em>wc</em> command. For the previous sample output from <em>grep</em>, the output from the piped command is</p>
+
+<pre><code class="language-bash">3
+</code></pre>
+
+<p>The use of pipes frequently makes it unnecessary to create temporary files.</p>
+
+<hr />
+
+<p>4. The directory &ldquo;/bin&rdquo; contains many useful commands and is usually included in the sequence of directories the shell searches.</p>
+
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://docs.ginuerzh.xyz/linux/bach/01/02/" data-toggle="tooltip" data-placement="top" title="1.2 SYSTEM STRUCTURE">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://docs.ginuerzh.xyz/linux/bach/01/04/" data-toggle="tooltip" data-placement="top" title="1.4 OPERATING SYSTEM SERVICES">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://docs.ginuerzh.xyz/linux/">LINUX</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.40.1</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://docs.ginuerzh.xyz/linux/js/main.js"></script>
+<script src="https://docs.ginuerzh.xyz/linux/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://docs.ginuerzh.xyz/linux/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

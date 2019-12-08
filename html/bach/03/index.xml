@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>3 THE BUFFER CACHE on LINUX</title>
+    <link>https://docs.ginuerzh.xyz/linux/bach/03/</link>
+    <description>Recent content in 3 THE BUFFER CACHE on LINUX</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 03 May 2018 13:11:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://docs.ginuerzh.xyz/linux/bach/03/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>3.7 EXERCISES</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/03/07/</link>
+      <pubDate>Sat, 05 May 2018 16:10:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/03/07/</guid>
+      <description>1. Consider the hash function in Figure 3.3. The best hash function is one that distributes the blocks uniformly over the set of hash queues. What would be an optimal hashing function? Should a hash function use the logical device number in its calculations?
+2. In the algorithm getblk, if the kernel removes a buffer from the free list, it must raise the processor priority level to block out interrupts before checking the free list.</description>
+    </item>
+    
+    <item>
+      <title>3.6 SUMMARY</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/03/06/</link>
+      <pubDate>Sat, 05 May 2018 16:07:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/03/06/</guid>
+      <description>This chapter has presented the structure of the buffer cache and the various methods by which the kernel locates blocks in the cache. The buffer algorithms combine several simple ideas to provide a sophisticated caching mechanism. The kernel uses the least-recently-used replacement algorithm to keep blocks in the buffer cache, assuming that blocks that were recently accessed are likely to be accessed again soon. The order that the buffers appear on the free list specifies the order in which they were last used.</description>
+    </item>
+    
+    <item>
+      <title>3.5 ADVANTAGES AND DISADVANTAGES OF THE BUFFER CACHE</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/03/05/</link>
+      <pubDate>Sat, 05 May 2018 15:55:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/03/05/</guid>
+      <description>Use of the buffer cache has several advantages and, unfortunate1y, some disadvantages.
+ The use of buffers allows uniform disk access, because the kernel does not need to know the reason for the I/O. Instead, it copies data to and from buffers, regardless of whether the data is part of a file, an inode, or a super block. The buffering of disk I/O makes the code more modular, since the parts of the kernel that do the I/O with the disk have one interface for all purposes.</description>
+    </item>
+    
+    <item>
+      <title>3.4 READING AND WRITING DISK BLOCKS</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/03/04/</link>
+      <pubDate>Sat, 05 May 2018 15:28:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/03/04/</guid>
+      <description>Now that the buffer allocation algorithm has been covered, the procedures for reading and writing disk blocks should be easy to understand. To read a disk block (Figure 3.13), a process uses algorithm getblk to search for it in the buffer cache. If it is in the cache, the kernel can return it immediately without physically reading the block from the disk. If it is not in the cache, the kernel calls the disk driver to &amp;ldquo;schedule&amp;rdquo; a read request and goes to sleep awaiting the event thin the I/O completes.</description>
+    </item>
+    
+    <item>
+      <title>3.3 SCENARIOS FOR RETRIEVAL OF A BUFFER</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/03/03/</link>
+      <pubDate>Fri, 04 May 2018 13:25:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/03/03/</guid>
+      <description>As seen in Figure 2.1, high-level kernel algorithms in the file subsystem invoke the algorithms for managing the buffer cache. The high-level algorithms determine the logical device number and block number that they Wish to access when they attempt to retrieve a block. For example, if a process wants to read data from a file, the kernel determines which file system contains the file and which block in the file system contains the data, as will be seen in Chapter 4.</description>
+    </item>
+    
+    <item>
+      <title>3.2 STRUCTURE OF THE BUFFER POOL</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/03/02/</link>
+      <pubDate>Fri, 04 May 2018 13:00:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/03/02/</guid>
+      <description>The kernel caches data in the buffer pool according to a least recently used algorithm: after it allocates a buffer to a disk block, it cannot use the buffer for another block until all other buffers have been used more recently. The kernel maintains a free list of buffers that preserves the least recently used order. The free list is a doubly linked circular list of buffers with a dummy buffer header that marks its beginning and end (Figure 3.</description>
+    </item>
+    
+    <item>
+      <title>3.1 BUFFER HEADERS</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/03/01/</link>
+      <pubDate>Thu, 03 May 2018 13:25:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/03/01/</guid>
+      <description>During system initialization, the kernel allocates space for a number of buffers, configurable according to memory size and system performance constraints. A buffer consists of two parts: a memory array that contains data from the disk and a buffer header that identifies the buffer. Because there is a one to one mapping of buffer headers to data arrays, the ensuing text will frequently refer to both parts as a &amp;ldquo;buffer,&amp;rdquo; and the context should make clear which part is being discussed.</description>
+    </item>
+    
+  </channel>
+</rss>

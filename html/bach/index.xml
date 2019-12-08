@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>UNIX on LINUX</title>
+    <link>https://docs.ginuerzh.xyz/linux/bach/</link>
+    <description>Recent content in UNIX on LINUX</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 27 Apr 2018 13:18:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://docs.ginuerzh.xyz/linux/bach/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>BIBLIOGRAPHY</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/bibliography/</link>
+      <pubDate>Fri, 27 Apr 2018 13:18:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/bibliography/</guid>
+      <description>[Babaoglu 81] Babaoglu, 0., and W. Joy, &amp;ldquo;Converting a Swap-Based System to do Paging in an Architecture Lacking Page-Referenced Bits,&amp;rdquo; Proceedings of the 8th Symposium on Operating Systems Principles, ACM Operating Systems Review, Vol. 15(5), Dec. 1981, pp. 78-86.
+[Bach 84] Bach, M. J., and S. J. Buroff, &amp;ldquo;Multiprocessor UNIX Systems,&amp;rdquo; AT&amp;amp;T Bell Laboratories Technical Journal, Oct. 1984, Vol 63, No. 8, Part 2, pp. 1733 - 1750.
+[Barak 80] Barak, A.</description>
+    </item>
+    
+    <item>
+      <title>PREFACE</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/preface/</link>
+      <pubDate>Thu, 26 Apr 2018 21:50:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/preface/</guid>
+      <description>The UNIX system was first described in a 1974 paper in the Communications of the ACM [Thompson 74] by Ken Thompson and Dennis Ritchie. Since that time, it has become increasingly widespread and popular throughout the computer industry where more and more vendors are offering support for it on their machines. It is especially popular in universities where it is frequently used for operating systems research and case studies.
+Many books and papers have described parts of the system, among them, two special issues of the Bell System Technical Journal in 1978 [BSTJ 78] and 1984 [BLTJ 84].</description>
+    </item>
+    
+  </channel>
+</rss>

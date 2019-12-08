@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>5.15 LINK</title>
+  <meta property="og:title" content="5.15 LINK" />
+  <meta name="twitter:title" content="5.15 LINK" />
+  <meta name="description" content="The link system call links a file to a new name in the file system directory structure, creating a new directory entry for an existing inode; The syntax for the link system call is
+link (source file name, target file name);  where source file name is the name of an existing file and target file name is the new (additional) name the file will have after completion of the link call.">
+  <meta property="og:description" content="The link system call links a file to a new name in the file system directory structure, creating a new directory entry for an existing inode; The syntax for the link system call is
+link (source file name, target file name);  where source file name is the name of an existing file and target file name is the new (additional) name the file will have after completion of the link call.">
+  <meta name="twitter:description" content="The link system call links a file to a new name in the file system directory structure, creating a new directory entry for an existing inode; The syntax for the link system call is
+link (source file …">
+  <meta name="author" content=""/>
+  <meta property="og:image" content="https://docs.ginuerzh.xyz/linux/linux.jpg" />
+  <meta name="twitter:image" content="https://docs.ginuerzh.xyz/linux/linux.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://docs.ginuerzh.xyz/linux/bach/05/15/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="LINUX" />
+
+  <meta name="generator" content="Hugo 0.40.1" />
+  <link rel="canonical" href="https://docs.ginuerzh.xyz/linux/bach/05/15/" />
+  <link rel="alternate" href="https://docs.ginuerzh.xyz/linux/index.xml" type="application/rss+xml" title="LINUX">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css" integrity="sha384-wITovz90syo1dJWVh32uuETPVEtGigN07tkttEqPv+uR2SE/mbQcG7ATL28aI9H0" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://docs.ginuerzh.xyz/linux/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://docs.ginuerzh.xyz/linux/css/highlight.min.css" /><link rel="stylesheet" href="https://docs.ginuerzh.xyz/linux/css/codeblock.css" />
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+</head>
+
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://docs.ginuerzh.xyz/linux/">LINUX</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li class="navlinks-container">
+              <a class="navlinks-parent" href="javascript:void(0)">Contents</a>
+              <div class="navlinks-children">
+                
+                  <a href="/linux/bach/">Bach</a>
+                
+              </div>
+            </li>
+          
+        
+          
+            <li>
+              <a title="about" href="/linux/about/">about</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    <div class="avatar-container">
+      <div class="avatar-img-border">
+        
+          <a title="LINUX" href="https://docs.ginuerzh.xyz/linux/">
+            <img class="avatar-img" src="https://docs.ginuerzh.xyz/linux/linux.jpg" alt="LINUX" />
+          </a>
+        
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+
+
+    
+  
+  
+  
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="bach-heading">
+              <h1>5.15 LINK</h1>
+                
+                
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <p>The link system call links a file to a new name in the file system directory structure, creating a new directory entry for an existing inode; The syntax for the link system call is</p>
+
+<pre><code class="language-text">link (source file name, target file name);
+</code></pre>
+
+<p>where <em>source file name</em> is the name of an existing file and <em>target file name</em> is the new (additional) name the file will have after completion of the <em>link</em> call. The file system contains a path name for each link the file has, and processes can access the file by any of the path names. The kernel does not know which name was the original file name, so no file name is treated specially. For example, after executing the system calls</p>
+
+<pre><code class="language-c">link(&quot;/usr/src/uts/sys&quot;, &quot;/usr/include/sys&quot;);
+link(&quot;/usr/include/realfile.h&quot;, &quot;/usr/src/uts/sys/testfile.h&quot;);
+</code></pre>
+
+<p>the following three path names refer to the same file: &ldquo;/usr/src/uts/sys/testfile.h&rdquo;, &ldquo;/usr/include/sys/testfile.h&rdquo;, and &ldquo;/usr/include/realfile&rdquo; (see Figure 5.28).</p>
+
+<p><img src="/linux/img/bach/figure5.28.jpg" alt="figure 5.28" /></p>
+
+<p><strong>Figure 5.28.</strong> Linked Files in File System Tree</p>
+
+<p>The kernel allows only a superuser to <em>link</em> directories, simplifying the coding of programs that traverse the file system tree. If arbitrary users could <em>link</em> directories, programs designed to traver11e the file hierarchy would have to worry about getting into an infinite loop if a user were to <em>link</em> a directory to a node name below it in the hierarchy. Superusers are presumably more careful about making such <em>links</em>. The capability to link directories had to be supported on early versions of the system, because the implementation of the <em>mkdir</em> command, which creates a new directory, relies on the capability to link directories. Inclusion of the <em>mkdir</em> system call eliminates the need to link directories.</p>
+
+<pre><code class="language-text">algorithm link
+input:  existing file name
+        new file name
+output: none
+{
+    get inode for existing file name (algorithm namei);
+    if (too many links on file or linking directory without super user permission)
+    {
+        release inode (algorithm iput);
+        return(error);
+    }
+    increment link count on inode;
+    update disk copy of inode;
+    unlock inode;
+    get parent inode for directory to contain new file name (algorithm namei);
+    if (new file name already exists or existing file, new file on different file systems)
+    {
+        undo update done above;
+        return (error);
+    }
+    create new directory entry in parent directory of new file name:
+        include new file name, inode number of existing file name;
+    release parent directory inode (algorithm iput);
+    release inode of existing file (algorithm iput);
+}
+</code></pre>
+
+<p><strong>Figure 5.29.</strong> Algorithm for Linking Files</p>
+
+<p>Figure 5.29 shows the algorithm for <em>link</em>. The kernel first locates the inode for the source file using algorithm <em>namei</em>, increments its link count, updates the disk copy of the inode (for consistency, as will be seen), and unlocks the inode. It then searches for the target file; if the file is present, the <em>link</em> call fails, and the kernel decrements the link count incremented earlier. Otherwise, it notes the location of an empty slot in the parent directory of the target file, writes the target file name and the source file inode number into that slot, and releases the inode of the target file parent directory via algorithm <em>iput</em>. Since the target file did not originally exist, there is no other inode to release. The kernel concludes by releasing the source file inode: Its link count is 1 greater than it was at the beginning of the call, and another name in the file system allows access to it. The link count keeps count of the directory entries that refer to the file and is thus distinct from the inode reference count. If no other processes access the file at the conclusion of the <em>link</em> call, the inode reference count of the file is 0, and the link count of the file is at least 2.</p>
+
+<p>For example, when executing</p>
+
+<pre><code class="language-c">link(&quot;source&quot;, &quot;dir/target&quot;);
+</code></pre>
+
+<p>the kernel locates the inode for file &ldquo;source&rdquo;, increments its link count, remembers its inode number, say 74, and unlocks the inode. It locates the inode of &ldquo;dir&rdquo;, the parent directory of &ldquo;target&rdquo;, finds an empty directory slot in &ldquo;dir&rdquo;, and writes the file name &ldquo;target&rdquo; and the inode number 74 into the empty directory slot. Finally, it releases the inode for &ldquo;source&rdquo; via algorithm <em>iput</em>. If the link count of &ldquo;source&rdquo; had been 1, it is now 2.</p>
+
+<p>Two deadlock possibilities are worthy of note, both concerning the reason the process unlocks the source file inode after incrementing its link count. If the kernel did not unlock the inode, two processes could deadlock by executing the following system calls simultaneously.</p>
+
+<pre><code class="language-text">process A:  link(&quot;a/b/c/d&quot;, &quot;e/f/g&quot;);
+process B:  link(&quot;e/f&quot;, &quot;a/b/c/d/ee&quot;);
+</code></pre>
+
+<p>Suppose process A finds the inode for file &ldquo;a/b/c/d&rdquo; at the same time that process B finds the inode for &ldquo;e/f&rdquo;. The phrase <em>at the same time</em> means that the system arrives at a state where each process has allocated its inode.</p>
+
+<p><img src="/linux/img/bach/figure5.30.jpg" alt="figure 5.30" /></p>
+
+<p><strong>Figure 5.30.</strong> Deadlock Scenario for Link</p>
+
+<p>Figure 5.30 illustrates an execution scenario. When process A now attempts to find the inode for directory &ldquo;e/f&rdquo;, it wouid sleep awaiting the event that the inode for &ldquo;f&rdquo; becomes free. But when process B attempts to find the inode for directory &ldquo;a/b/c/d&rdquo;, it would sleep awaiting the event that the inode for &ldquo;d&rdquo; becomes free. Process A would be holding a locked inode that process B wants, and process B would be holding a locked inode that process A wants. The kernel avoids this classic example of deadlock by releasing the source file&rsquo;s inode after incrementing its link count. Since the first resource (inode) is free when accessing the next resource, no deadlock can occur.</p>
+
+<p>The last example showed how two processes could deadlock each other if the inode lock were not released. A single process could also deadlock itself. If it executed</p>
+
+<pre><code class="language-c">link(&quot;a/b/c&quot;, &quot;a/b/c/d&quot;);
+</code></pre>
+
+<p>it would allocate the inode for file &ldquo;c&rdquo; in the first part of the algorithm; if the kernel did not release the inode lock, it would deadlock when encountering the inode &ldquo;c&rdquo; in searching for the file &ldquo;d&rdquo;. If two processes, or even one process, could not continue executing because of deadlock, what would be the effect on the system? Since inodes are finitely allocatable resources, receipt of a signal cannot awaken the process from its sleep (Chapter 7). Hence, the system could not break the deadlock without rebooting. If no other processes accessed the files over which the processes deadlock, no other processes in the system would be affected.</p>
+
+<p>However, any processes that accessed those files (or attempted to access other files via the locked directory) would deadlock. Thus, if the file were &ldquo;/bin&rdquo; or &ldquo;/usr/bin&rdquo; (typical depositories for commands) or &ldquo;/bin/sh&rdquo; (the shell) the effect on the system would be disastrous.</p>
+
+
+        
+
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://docs.ginuerzh.xyz/linux/bach/05/14/" data-toggle="tooltip" data-placement="top" title="5.14 MOUNTING AND UNMOUNTING FILE SYSTEMS">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://docs.ginuerzh.xyz/linux/bach/05/16/" data-toggle="tooltip" data-placement="top" title="5.16 UNLINK">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+
+          &nbsp;&bull;&nbsp;
+          2018
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://docs.ginuerzh.xyz/linux/">LINUX</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.40.1</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.js" integrity="sha384-/y1Nn9+QQAipbNQWU65krzJralCnuOasHncUFXGkdwntGeSvQicrYkiUBwsgUqc1" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js" integrity="sha384-dq1/gEHSxPZQ7DdrM82ID4YVol9BYyU7GbWlIwnwyPzotpoc57wDw/guX8EaYGPx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://docs.ginuerzh.xyz/linux/js/main.js"></script>
+<script src="https://docs.ginuerzh.xyz/linux/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script>
+<script src="https://docs.ginuerzh.xyz/linux/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+  </body>
+</html>
+

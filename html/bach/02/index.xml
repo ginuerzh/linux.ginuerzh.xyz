@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>2 INTRODUCTION TO THE KERNEL on LINUX</title>
+    <link>https://docs.ginuerzh.xyz/linux/bach/02/</link>
+    <description>Recent content in 2 INTRODUCTION TO THE KERNEL on LINUX</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 29 Apr 2018 11:50:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://docs.ginuerzh.xyz/linux/bach/02/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>2.6 EXERCISES</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/02/06/</link>
+      <pubDate>Wed, 02 May 2018 13:40:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/02/06/</guid>
+      <description>1. Consider the following sequence of commands:
+grep main a.c b.c c.c &amp;gt; grepout &amp;amp; wc -l &amp;lt; grepout &amp;amp; rm grepout &amp;amp;  The ampersand (&amp;rdquo;&amp;amp;&amp;ldquo;) at the end of each command line informs the shell to run the command in the background, and it can execute each command line in Parallel. Why is this not equivalent to the following command line?
+grep main a.c b.c c.c | wc -l  2.</description>
+    </item>
+    
+    <item>
+      <title>2.5 SUMMARY AND PREVIEW</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/02/05/</link>
+      <pubDate>Wed, 02 May 2018 13:33:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/02/05/</guid>
+      <description>This chapter has described the architecture of the kernel; its two major components are the file subsystem and the process subsystem. The file subsystem controls the storage and retrieval of data in user files. Files are organized into file systems, which are treated as logical devices; a physical device such as a disk can contain several logical devices (file systems). Each file system has a super block that describes the structure and contents of the file system, and each file in a file system is described by an inode that gives the attributes of the file.</description>
+    </item>
+    
+    <item>
+      <title>2.4 SYSTEM ADMINISTRATION</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/02/04/</link>
+      <pubDate>Wed, 02 May 2018 13:30:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/02/04/</guid>
+      <description>Administrative processes are loosely classified as those processes that do various functions for the general welfare of the user community. Such functions include disk formatting. creation of new file systems, repair of damaged file systems, kernel debugging, and others. Conceptually, there is no difference between administrative processes and user processes: They use the same set of system calls available to the general community. They are distinguished from general user processes only in the rights and privileges they are allowed.</description>
+    </item>
+    
+    <item>
+      <title>2.3 KERNEL DATA STRUCTURES</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/02/03/</link>
+      <pubDate>Wed, 02 May 2018 13:28:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/02/03/</guid>
+      <description>Most kernel data structures occupy fixed-size tables rather than dynamically allocated space, The advantage of this approach is that the kernel code is simple, but it limits the number of entries for a data structure to the number that was originally configured when generating the system: If, during operation of the system, the kernel should run out of entries for a data structure, it cannot allocate space for new entries dynamically but must report an error to the requesting user.</description>
+    </item>
+    
+    <item>
+      <title>2.2 INTRODUCTION TO SYSTEM CONCEPTS</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/02/02/</link>
+      <pubDate>Sun, 29 Apr 2018 12:20:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/02/02/</guid>
+      <description>This section gives an overview of some major kernel data structures and describes the function of modules shown in Figure 2.1 in more detail.
+2.2.1 An Overview of the File Subsystem The internal representation of a file is given by an inode, which contains a description of the disk layout of the file data and other information such as the file owner, access permissions, and access times. The term inode is a contraction of the term index node and is commonly used in literature on the UNIX system.</description>
+    </item>
+    
+    <item>
+      <title>2.1 ARCHITECTURE OF THE UNIX OPERATING SYSTEM</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/02/01/</link>
+      <pubDate>Sun, 29 Apr 2018 11:56:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/02/01/</guid>
+      <description>It has been noted (see page 239 of [Christian 83]) that the UNIX system supports the illusions that the file system has &amp;ldquo;places&amp;rdquo; and that processes have &amp;ldquo;life.&amp;rdquo; The two entities, files and processes, are the two central concepts in the UNIX system model. Figure 2.1 gives a block diagram of the kernel, showing various modules and their relationships to each other. In particular, it shows the file subsystem on the left and the process control subsystem on the right, the two major components of the kernel.</description>
+    </item>
+    
+  </channel>
+</rss>

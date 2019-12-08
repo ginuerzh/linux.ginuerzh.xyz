@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>LINUX</title>
+    <link>https://docs.ginuerzh.xyz/linux/</link>
+    <description>Recent content on LINUX</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Wed, 10 Oct 2018 14:04:00 +0800</lastBuildDate>
+    
+	<atom:link href="https://docs.ginuerzh.xyz/linux/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>5.19 SUMMARY</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/19/</link>
+      <pubDate>Wed, 10 Oct 2018 14:04:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/19/</guid>
+      <description>This chapter concludes the first part of the book, the explanation of the file system. It introduced three kernel tables: the user file descriptor table, the system file table, and the mount table. It described the algorithms for many system calls relating to the file system and their interaction. It introduced file system abstractions, which allow the UNIX system to support varied file system types. Finally, it described how fsck checks the consistency of the file system.</description>
+    </item>
+    
+    <item>
+      <title>5.18 FILE SYSTEM MAINTENANCE</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/18/</link>
+      <pubDate>Wed, 10 Oct 2018 13:56:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/18/</guid>
+      <description>The kernel maintains consistency of the file system during normal operation. However, extraordinary circumstances such as a power failure may cause a system crash that leaves a file system in an inconsistent state: most of the data in the file system is acceptable for use, but some inconsistencies exist. The command fsck checks for such inconsistencies and repairs the file system if necessary. It accesses the file system by its block or raw interface (Chapter 10) and bypasses the regular file access methods.</description>
+    </item>
+    
+    <item>
+      <title>5.17 FILE SYSTEM ABSTRACTIONS</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/17/</link>
+      <pubDate>Wed, 10 Oct 2018 13:48:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/17/</guid>
+      <description>Weinberger introduced file system types to support his network file system (see [Killian 84] for a brief description of this mechanism), and the latest release of System V supports a derivation of his scheme. File system types allow the kernel to support multiple file systems simultaneously, such as network file systems (Chapter 13) or even file systems of other operating systems. Processes use the usual UNIX system calls to access files, and the kernel maps a generic set of file operations into operations specific to each file system type.</description>
+    </item>
+    
+    <item>
+      <title>5.16 UNLINK</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/16/</link>
+      <pubDate>Tue, 09 Oct 2018 19:14:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/16/</guid>
+      <description>The unlink system call removes a directory entry for a file. The syntax for the unlink call is
+unlink(pathname);  where pathname identifies the name of the file to be unlinked from the directory hierarchy. If a process unlinks a given file, no file is accessible by that name until another directory entry with that name is created. In the following code fragment, for example,
+unlink(&amp;quot;myfile&amp;quot;); fd = open(&amp;quot;myfile&amp;quot;, O_RDONLY);  the open call should fail, because the current directory no longer contains a file called myfile.</description>
+    </item>
+    
+    <item>
+      <title>5.15 LINK</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/15/</link>
+      <pubDate>Tue, 09 Oct 2018 17:52:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/15/</guid>
+      <description>The link system call links a file to a new name in the file system directory structure, creating a new directory entry for an existing inode; The syntax for the link system call is
+link (source file name, target file name);  where source file name is the name of an existing file and target file name is the new (additional) name the file will have after completion of the link call.</description>
+    </item>
+    
+    <item>
+      <title>5.14 MOUNTING AND UNMOUNTING FILE SYSTEMS</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/14/</link>
+      <pubDate>Mon, 08 Oct 2018 11:48:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/14/</guid>
+      <description>A physical disk unit consists of several logical sections, partitioned by the disk driver, and each section has a device file name. Processes can access data in a section by opening the appropriate device file name and then reading and writing the &amp;ldquo;file,&amp;rdquo; treating it as a sequence of disk blocks. Chapter 10 gives details on this interface. A section of a disk may contain a logical file system, consisting of a boot block, super block, inode list, and data blocks, as described in Chapter 2.</description>
+    </item>
+    
+    <item>
+      <title>5.13 DUP</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/13/</link>
+      <pubDate>Mon, 08 Oct 2018 11:32:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/13/</guid>
+      <description>The dup system call copies a file descriptor into the first free slot of the user file descriptor table, returning the new file descriptor to the user. It works for all file types. The syntax of the system call is
+newfd = dup(fd);  where fd is the file descriptor being duped and newfd is the new file descriptor that references the file. Because dup duplicates the file descriptor, it increments the count of the corresponding file table entry, which now has one more file descriptor entry that points to it, For example, examination of the data structures depicted in Figure 5.</description>
+    </item>
+    
+    <item>
+      <title>5.12 PIPES</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/12/</link>
+      <pubDate>Mon, 08 Oct 2018 10:38:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/12/</guid>
+      <description>Pipes allow transfer of data between processes in a first-in-first-out manner (FIFO) , and they also allow synchronization of process execution. Their implementation allows processes to communicate even though they do not know what processes are on the other end of the pipe. The traditional implementation of pipes uses the file system for data storage. There are two kinds of pipes: named pipes and, for lack of a better term, unnamed pipes, which are identical except for the way that a process initially accesses them.</description>
+    </item>
+    
+    <item>
+      <title>5.11 STAT AND FSTAT</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/11/</link>
+      <pubDate>Mon, 08 Oct 2018 10:33:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/11/</guid>
+      <description>The system calls stat and fstat allow processes to query the status of files, returning information such as the file type, file owner, access permissions, file size, number of links, inode number, and file access times. The syntax for the system calls is
+stat(pathname, statbuffer); fstat(fd, statbuffer);  where pathname is a file name, fd is a file descriptor returned by a previous open call, and statbuffer is the address of a data structure in the user process that will contain the status information of the file on completion of the call.</description>
+    </item>
+    
+    <item>
+      <title>5.10 CHANGE OWNER AND CHANGE MODE</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/10/</link>
+      <pubDate>Mon, 08 Oct 2018 10:30:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/10/</guid>
+      <description>Changing the owner or mode (access permissions) of a file are operations on the inode, not on the file per se. The syntax of the calls is
+chown(pathname, owner, group) chmod(pathname, mode)  To change the owner of a file, the kernel converts the file name to an inode using algorithm namei. The process owner must be superuser or match that of the file owner (a process cannot give away something that does not belong to it).</description>
+    </item>
+    
+    <item>
+      <title>5.9 CHANGE DIRECTORY AND CHANGE ROOT</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/09/</link>
+      <pubDate>Sun, 07 Oct 2018 17:53:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/09/</guid>
+      <description>When the system is first booted, process 0 makes the file system root its current directory during initialization. It executes the algorithm iget on the root inode, saves it in the u area as its current directory, and releases the inode lock. When a new process is created via the fork system call, the new process inherits the current directory of the old process in its u area, and the kernel increments the inode reference count accordingly.</description>
+    </item>
+    
+    <item>
+      <title>5.8 CREATION OF SPECIAL FILES</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/08/</link>
+      <pubDate>Sun, 07 Oct 2018 17:40:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/08/</guid>
+      <description>The system call mknod creates special files in the system, including named pipes, device files, and directories. It is similar to creat in that the kernel allocates an inode for the file. The syntax of the mknod system call is
+mknod(pathname, type and permissions, dev)  where pathname is the name of the node to be created, type and permissions give the node type (directory, for example) and access permissions for the new file to be created, and dev specifies the major and minor device numbers for block and character special files (Chapter 10).</description>
+    </item>
+    
+    <item>
+      <title>5.7 FILE CREATION</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/07/</link>
+      <pubDate>Sun, 07 Oct 2018 17:02:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/07/</guid>
+      <description>The open system call gives a process access to an existing file, but the creat system call creates a new file in the system. The syntax for the creat system call is
+fd = creat(pathname, modes);  where the variables pathname, modes, and fd mean the same as they do in the open svstem call. If no such file previously existed, the kernel creates a new file with the specified name and permission modes; if the file already existed, the kernel truncates the file (releases all existing data blocks and sets the file size to 0) subject to suitable file access permissions.</description>
+    </item>
+    
+    <item>
+      <title>5.6 CLOSE</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/06/</link>
+      <pubDate>Sun, 07 Oct 2018 16:48:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/06/</guid>
+      <description>A process closes an open file when it no longer wants to access it. The syntax for the close system call is
+close(fd);  where fd is the file descriptor for the open file. The kernel does the close operation by manipulating the file descriptor and the corresponding file table and inode table entries. If the reference count of the file table entry is greater than 1 because of dup or fork calls, then other user file descriptors reference the file table entry, as will be seen; the kernel decrements the count and the close completes.</description>
+    </item>
+    
+    <item>
+      <title>5.5 ADJUSTING THE POSITION OF FILE I/O - LSEEK</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/05/</link>
+      <pubDate>Sun, 07 Oct 2018 16:42:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/05/</guid>
+      <description>The ordinary use of read and write system calls provides sequential access to a file, but processes can use the lseek system call to position the I/O and allow random access to a file. The syntax for the system call is
+position = lseek(fd, offset, reference);  where fd is the file descriptor identifying the file, offset is a byte offset, and reference indicates whether offset should be considered from the beginning of the file, from the current position of the read/write offset, or from the end of the file.</description>
+    </item>
+    
+    <item>
+      <title>5.4 FILE AND RECORD LOCKING</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/04/</link>
+      <pubDate>Sun, 07 Oct 2018 16:38:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/04/</guid>
+      <description>The original UNIX system developed by Thompson and Ritchie did not have an internal mechanism by which a process could insure exclusive access to a file. A locking mechanism was considered unnecessary because, as Ritchie notes, &amp;ldquo;we are not faced with large, single-file databases maintained by independent processes&amp;rdquo; (see [Ritchie 81]). To make the UNIX system more attractive to commercial users with database applications, System V now contains file and record locking mechanisms.</description>
+    </item>
+    
+    <item>
+      <title>5.3 WRITE</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/03/</link>
+      <pubDate>Sun, 07 Oct 2018 16:28:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/03/</guid>
+      <description>The syntax for the write system call is
+number = write(fd, buffer, count);  where the meaning of the variables fd, buffer, count, and number are the same as they are for the read system call. The algorithm for writing a regular file is similar to that for reading a regular file. However, if the file does not contain a block that corresponds to the byte offset to be written, the kernel allocates a new block using algorithm alloc and assigns the block number to the correct position in the inode&amp;rsquo;s table of contents.</description>
+    </item>
+    
+    <item>
+      <title>5.2 READ</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/02/</link>
+      <pubDate>Sun, 07 Oct 2018 14:10:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/02/</guid>
+      <description>The syntax of the read system call is
+number = read(fd, buffer, count)  where fd is the file descriptor returned by open, buffer is the address of a data structure in the user process that will contain the read data on successful completion of the call, count is the number of bytes the user wants to read, and number is the number of bytes actually read. Figure 5.5 depicts the algorithm read for reading a regular file.</description>
+    </item>
+    
+    <item>
+      <title>5.1 OPEN</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/05/01/</link>
+      <pubDate>Sun, 07 Oct 2018 13:40:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/05/01/</guid>
+      <description>The open system call is the first step a process must take to access the data in a file. The syntax for the open system call is
+fd = open(pathname, flags, modes);  where pathname is a file name, flags indicate the type of open (such as for reading or writing) , and modes give the file permissions if the file is being created. The open system call returns an integer1 called the user file descriptor.</description>
+    </item>
+    
+    <item>
+      <title>4.9 SUMMARY</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/04/09/</link>
+      <pubDate>Sun, 13 May 2018 20:47:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/04/09/</guid>
+      <description>The inode is the data structure that describes the attributes of a file, including the layout of its data on disk. There are two versions of the inode: the disk copy that stores the inode information when the file is not in use and the in-core copy that records information about active files. Algorithms ialloc and ifree control assignment of a disk inode to a file during the creat, mknod, pipe, and unlink system calls (next chapter), and the algorithms iget and iput control the allocation of in-core inodes when a process accesses a file.</description>
+    </item>
+    
+    <item>
+      <title>4.8 OTHER FILE TYPES</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/04/08/</link>
+      <pubDate>Sun, 13 May 2018 20:45:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/04/08/</guid>
+      <description>The UNIX system supports two other file types: pipes and special files. A pipe, sometimes called a fifo (for &amp;ldquo;first-in-first-out&amp;rdquo;), differs from a regular file in that its data is transient: Once data is read from a pipe, it cannot be read again. Also, the data is read in the order that it was written to the pipe, and the system allows no deviation from that order. The kernel stores data in a pipe the same way it stores data in an ordinary file, except that it uses only the direct blocks, not the indirect blocks.</description>
+    </item>
+    
+    <item>
+      <title>4.7 ALLOCATION OF DISK BLOCKS</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/04/07/</link>
+      <pubDate>Sun, 13 May 2018 20:14:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/04/07/</guid>
+      <description>When a process writes data to a file, the kernel must allocate disk blocks from the file system for direct data blocks and, sometimes, for indirect blocks. The file system super block contains an array that is used to cache the numbers of free disk blocks in the file system. The utility program mkfs (make file system) organizes the data blocks of a file system in a linked list, such that each link of the list is a disk block that contains an array of free disk block numbers, and one array entry is the number of the next block of the linked list.</description>
+    </item>
+    
+    <item>
+      <title>4.6 INODE ASSIGNMENT TO A NEW FILE</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/04/06/</link>
+      <pubDate>Sun, 13 May 2018 19:28:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/04/06/</guid>
+      <description>The kernel uses algorithm iget to allocate a known inode, one whose (file system and) inode number was previously determined. In algorithm namei for instance, the kernel determines the inode number by matching a path name component to a name in a directory. Another algorithm, ialloc, assigns a disk inode to a newly created file.
+The file system contains a linear list of inodes, as mentioned in Chapter 2. An inode is free if its type field is zero.</description>
+    </item>
+    
+    <item>
+      <title>4.5 SUPER BLOCK</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/04/05/</link>
+      <pubDate>Sun, 13 May 2018 19:25:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/04/05/</guid>
+      <description>So far, this chapter has described the structure of a file, assuming that the inode was previously bound to a file and that the disk blocks containing the data were already assigned. The next sections cover how the kernel assigns inodes and disk blocks. To understand those algorithms, let us examine the structure of the super block.
+The super block consists of the following fields:
+ the size of the file system, the number of free blocks in the file system, a list of free blocks available on the file system, the index of the next free block in the free block list, the size of the inode list, the number of free inodes in the file system, a list of free inodes in the file system, the index of the next free inode in the free inode list, lock fields for the free block and free inode lists, a flag indicating that the super block has been modified.</description>
+    </item>
+    
+    <item>
+      <title>4.4 CONVERSION OF A PATH NAME TO AN INODE</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/04/04/</link>
+      <pubDate>Sun, 13 May 2018 19:06:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/04/04/</guid>
+      <description>The initial access to a file is by its path name, as in the open, chdir (change directory), or link system calls. Because the kernel works internally with inodes rather than with path names, it converts the path names to inodes to access files. The algorithm namei parses the path name one component at a time, converting each component into an inode based on its name and the directory being searched, and eventually returns the inode of the input path name (Figure 4.</description>
+    </item>
+    
+    <item>
+      <title>4.3 DIRECTORIES</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/04/03/</link>
+      <pubDate>Sun, 13 May 2018 19:00:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/04/03/</guid>
+      <description>Recall from Chapter 1 that directories are the files that give the file system its hierarchical structure; they play an important role in conversion of a file name to an inode number: A directory is a file whose data is a sequence of entries, each consisting of an inode number and the name of a file contained in the directory. A path name is a null terminated character string divided into separate components by the slash (&amp;ldquo;/&amp;rdquo;) character.</description>
+    </item>
+    
+    <item>
+      <title>4.2 STRUCTURE OF A REGULAR FILE</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/04/02/</link>
+      <pubDate>Sat, 12 May 2018 15:13:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/04/02/</guid>
+      <description>As mentioned above, the inode contains the table of contents to locate a file&amp;rsquo;s data on disk. Since each block on a disk is addressable by number, the table of contents consists of a set of disk block numbers. If the data in a file were stored in a contiguous section of the disk (that is, the file occupied a linear sequence of disk blocks), then storing the start block address and the file size in the inode would suffice to access all the data in the file.</description>
+    </item>
+    
+    <item>
+      <title>4.1 INODES</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/04/01/</link>
+      <pubDate>Wed, 09 May 2018 13:11:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/04/01/</guid>
+      <description>4.1.1 Definition Inodes exist in a static form on disk, and the kernel reads them into an in-core inode to manipulate them. Disk inodes consist of the following fields:
+ File owner identifier. Ownership is divided between an individual owner and a &amp;ldquo;group&amp;rdquo; owner and defines the set of users who have access rights to a file. The superuser has access rights to all files in the system. File type.</description>
+    </item>
+    
+    <item>
+      <title>3.7 EXERCISES</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/03/07/</link>
+      <pubDate>Sat, 05 May 2018 16:10:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/03/07/</guid>
+      <description>1. Consider the hash function in Figure 3.3. The best hash function is one that distributes the blocks uniformly over the set of hash queues. What would be an optimal hashing function? Should a hash function use the logical device number in its calculations?
+2. In the algorithm getblk, if the kernel removes a buffer from the free list, it must raise the processor priority level to block out interrupts before checking the free list.</description>
+    </item>
+    
+    <item>
+      <title>3.6 SUMMARY</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/03/06/</link>
+      <pubDate>Sat, 05 May 2018 16:07:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/03/06/</guid>
+      <description>This chapter has presented the structure of the buffer cache and the various methods by which the kernel locates blocks in the cache. The buffer algorithms combine several simple ideas to provide a sophisticated caching mechanism. The kernel uses the least-recently-used replacement algorithm to keep blocks in the buffer cache, assuming that blocks that were recently accessed are likely to be accessed again soon. The order that the buffers appear on the free list specifies the order in which they were last used.</description>
+    </item>
+    
+    <item>
+      <title>3.5 ADVANTAGES AND DISADVANTAGES OF THE BUFFER CACHE</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/03/05/</link>
+      <pubDate>Sat, 05 May 2018 15:55:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/03/05/</guid>
+      <description>Use of the buffer cache has several advantages and, unfortunate1y, some disadvantages.
+ The use of buffers allows uniform disk access, because the kernel does not need to know the reason for the I/O. Instead, it copies data to and from buffers, regardless of whether the data is part of a file, an inode, or a super block. The buffering of disk I/O makes the code more modular, since the parts of the kernel that do the I/O with the disk have one interface for all purposes.</description>
+    </item>
+    
+    <item>
+      <title>3.4 READING AND WRITING DISK BLOCKS</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/03/04/</link>
+      <pubDate>Sat, 05 May 2018 15:28:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/03/04/</guid>
+      <description>Now that the buffer allocation algorithm has been covered, the procedures for reading and writing disk blocks should be easy to understand. To read a disk block (Figure 3.13), a process uses algorithm getblk to search for it in the buffer cache. If it is in the cache, the kernel can return it immediately without physically reading the block from the disk. If it is not in the cache, the kernel calls the disk driver to &amp;ldquo;schedule&amp;rdquo; a read request and goes to sleep awaiting the event thin the I/O completes.</description>
+    </item>
+    
+    <item>
+      <title>3.3 SCENARIOS FOR RETRIEVAL OF A BUFFER</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/03/03/</link>
+      <pubDate>Fri, 04 May 2018 13:25:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/03/03/</guid>
+      <description>As seen in Figure 2.1, high-level kernel algorithms in the file subsystem invoke the algorithms for managing the buffer cache. The high-level algorithms determine the logical device number and block number that they Wish to access when they attempt to retrieve a block. For example, if a process wants to read data from a file, the kernel determines which file system contains the file and which block in the file system contains the data, as will be seen in Chapter 4.</description>
+    </item>
+    
+    <item>
+      <title>3.2 STRUCTURE OF THE BUFFER POOL</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/03/02/</link>
+      <pubDate>Fri, 04 May 2018 13:00:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/03/02/</guid>
+      <description>The kernel caches data in the buffer pool according to a least recently used algorithm: after it allocates a buffer to a disk block, it cannot use the buffer for another block until all other buffers have been used more recently. The kernel maintains a free list of buffers that preserves the least recently used order. The free list is a doubly linked circular list of buffers with a dummy buffer header that marks its beginning and end (Figure 3.</description>
+    </item>
+    
+    <item>
+      <title>3.1 BUFFER HEADERS</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/03/01/</link>
+      <pubDate>Thu, 03 May 2018 13:25:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/03/01/</guid>
+      <description>During system initialization, the kernel allocates space for a number of buffers, configurable according to memory size and system performance constraints. A buffer consists of two parts: a memory array that contains data from the disk and a buffer header that identifies the buffer. Because there is a one to one mapping of buffer headers to data arrays, the ensuing text will frequently refer to both parts as a &amp;ldquo;buffer,&amp;rdquo; and the context should make clear which part is being discussed.</description>
+    </item>
+    
+    <item>
+      <title>2.6 EXERCISES</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/02/06/</link>
+      <pubDate>Wed, 02 May 2018 13:40:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/02/06/</guid>
+      <description>1. Consider the following sequence of commands:
+grep main a.c b.c c.c &amp;gt; grepout &amp;amp; wc -l &amp;lt; grepout &amp;amp; rm grepout &amp;amp;  The ampersand (&amp;rdquo;&amp;amp;&amp;ldquo;) at the end of each command line informs the shell to run the command in the background, and it can execute each command line in Parallel. Why is this not equivalent to the following command line?
+grep main a.c b.c c.c | wc -l  2.</description>
+    </item>
+    
+    <item>
+      <title>2.5 SUMMARY AND PREVIEW</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/02/05/</link>
+      <pubDate>Wed, 02 May 2018 13:33:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/02/05/</guid>
+      <description>This chapter has described the architecture of the kernel; its two major components are the file subsystem and the process subsystem. The file subsystem controls the storage and retrieval of data in user files. Files are organized into file systems, which are treated as logical devices; a physical device such as a disk can contain several logical devices (file systems). Each file system has a super block that describes the structure and contents of the file system, and each file in a file system is described by an inode that gives the attributes of the file.</description>
+    </item>
+    
+    <item>
+      <title>2.4 SYSTEM ADMINISTRATION</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/02/04/</link>
+      <pubDate>Wed, 02 May 2018 13:30:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/02/04/</guid>
+      <description>Administrative processes are loosely classified as those processes that do various functions for the general welfare of the user community. Such functions include disk formatting. creation of new file systems, repair of damaged file systems, kernel debugging, and others. Conceptually, there is no difference between administrative processes and user processes: They use the same set of system calls available to the general community. They are distinguished from general user processes only in the rights and privileges they are allowed.</description>
+    </item>
+    
+    <item>
+      <title>2.3 KERNEL DATA STRUCTURES</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/02/03/</link>
+      <pubDate>Wed, 02 May 2018 13:28:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/02/03/</guid>
+      <description>Most kernel data structures occupy fixed-size tables rather than dynamically allocated space, The advantage of this approach is that the kernel code is simple, but it limits the number of entries for a data structure to the number that was originally configured when generating the system: If, during operation of the system, the kernel should run out of entries for a data structure, it cannot allocate space for new entries dynamically but must report an error to the requesting user.</description>
+    </item>
+    
+    <item>
+      <title>2.2 INTRODUCTION TO SYSTEM CONCEPTS</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/02/02/</link>
+      <pubDate>Sun, 29 Apr 2018 12:20:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/02/02/</guid>
+      <description>This section gives an overview of some major kernel data structures and describes the function of modules shown in Figure 2.1 in more detail.
+2.2.1 An Overview of the File Subsystem The internal representation of a file is given by an inode, which contains a description of the disk layout of the file data and other information such as the file owner, access permissions, and access times. The term inode is a contraction of the term index node and is commonly used in literature on the UNIX system.</description>
+    </item>
+    
+    <item>
+      <title>2.1 ARCHITECTURE OF THE UNIX OPERATING SYSTEM</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/02/01/</link>
+      <pubDate>Sun, 29 Apr 2018 11:56:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/02/01/</guid>
+      <description>It has been noted (see page 239 of [Christian 83]) that the UNIX system supports the illusions that the file system has &amp;ldquo;places&amp;rdquo; and that processes have &amp;ldquo;life.&amp;rdquo; The two entities, files and processes, are the two central concepts in the UNIX system model. Figure 2.1 gives a block diagram of the kernel, showing various modules and their relationships to each other. In particular, it shows the file subsystem on the left and the process control subsystem on the right, the two major components of the kernel.</description>
+    </item>
+    
+    <item>
+      <title>1.6 SUMMARY</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/01/06/</link>
+      <pubDate>Sun, 29 Apr 2018 11:45:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/01/06/</guid>
+      <description>This chapter has described the overall structure of the UNIX system, the relationship between processes running in user mode versus kernel mode, and the assumptions the kernel makes about the hardware. Processes execute in user mode or kernel mode, where they avail themselves of system services using a well-defined set of system calls. The system design encourages programmers to write small programs that do only a few operations but do them well, and then to combine the programs using pipes and I/O redirection to do more sophisticated processing.</description>
+    </item>
+    
+    <item>
+      <title>1.5 ASSUMPTIONS ABOUT HARDWARE</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/01/05/</link>
+      <pubDate>Sun, 29 Apr 2018 11:24:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/01/05/</guid>
+      <description>The execution of user processes on UNIX systems is divided into two levels: user and kernel. When a process executes a system call, the execution mode of the process changes from user mode to kernel mode: the operating system executes and attempts to service the user request, returning an error code if it fails. Even if the user makes no explicit requests for operating system services, the operating system still does bookkeeping operations that relate to the user process, handling interrupts, scheduling processes, managing memory, and so on.</description>
+    </item>
+    
+    <item>
+      <title>1.4 OPERATING SYSTEM SERVICES</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/01/04/</link>
+      <pubDate>Sun, 29 Apr 2018 11:12:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/01/04/</guid>
+      <description>Figure 1.1 depicts the kernel layer immediately below the layer of user application programs. The kernel performs various primitive operations on behalf of user processes to support the user interface described above. Among the services provided by the kernel are
+ Controlling the execution of processes by allowing their creation, termination or suspension, and communication Scheduling processes fairly for execution on the CPU. Processes share the CPU in a time-shared manner: the CPU5 executes a process, the kernel suspends it when its time quantum elapses, and the kernel schedules another process to execute.</description>
+    </item>
+    
+    <item>
+      <title>1.3 USER PERSPECTIVE</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/01/03/</link>
+      <pubDate>Sat, 28 Apr 2018 20:15:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/01/03/</guid>
+      <description>This section briefly reviews high-level features of the UNIX system such as the file system, the processing environment, and building block primitives (for example, pipes). Later chapters will explore kernel support of these features in detail.
+1.3.1 The File System The UNIX file system is characterized by
+ a hierarchical structure, consistent treatment of file data, the ability to create and delete files, dynamic growth of files, the protection of file data.</description>
+    </item>
+    
+    <item>
+      <title>1.2 SYSTEM STRUCTURE</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/01/02/</link>
+      <pubDate>Fri, 27 Apr 2018 22:20:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/01/02/</guid>
+      <description>Figure 1.1. Architecture of UNIX Systems
+Figure 1.1 depict the high-level architecture of the UNIX system. The hardware at the center of the diagram provides the operating system with basic services that will be described in Section 1.5. The operating system interacts directly3 with the hardware, providing common services to programs and insulating them from hardware idiosyncrasies. Viewing the system as a set of layers, the operating system is commonly called the system kernel, or just the kernel, emphasizing its isolation from user programs.</description>
+    </item>
+    
+    <item>
+      <title>1.1 HISTORY</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/01/01/</link>
+      <pubDate>Fri, 27 Apr 2018 21:40:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/01/01/</guid>
+      <description>In 1965, Bell Telephone Laboratories joined an effort with the General Electric Company and Project MAC of the Massachusetts Institute of Technology to develop a new operating system called Multics [Organick 72] The goals of the Multics system were to provide simultaneous computer access to a large community of users, to supply ample computation power and data storage, and to allow users to share their data easily, if desired. Many people who later took part in the early development of the UNIX system participated in the Multics work at Bell Laboratories.</description>
+    </item>
+    
+    <item>
+      <title>BIBLIOGRAPHY</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/bibliography/</link>
+      <pubDate>Fri, 27 Apr 2018 13:18:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/bibliography/</guid>
+      <description>[Babaoglu 81] Babaoglu, 0., and W. Joy, &amp;ldquo;Converting a Swap-Based System to do Paging in an Architecture Lacking Page-Referenced Bits,&amp;rdquo; Proceedings of the 8th Symposium on Operating Systems Principles, ACM Operating Systems Review, Vol. 15(5), Dec. 1981, pp. 78-86.
+[Bach 84] Bach, M. J., and S. J. Buroff, &amp;ldquo;Multiprocessor UNIX Systems,&amp;rdquo; AT&amp;amp;T Bell Laboratories Technical Journal, Oct. 1984, Vol 63, No. 8, Part 2, pp. 1733 - 1750.
+[Barak 80] Barak, A.</description>
+    </item>
+    
+    <item>
+      <title>PREFACE</title>
+      <link>https://docs.ginuerzh.xyz/linux/bach/preface/</link>
+      <pubDate>Thu, 26 Apr 2018 21:50:00 +0800</pubDate>
+      
+      <guid>https://docs.ginuerzh.xyz/linux/bach/preface/</guid>
+      <description>The UNIX system was first described in a 1974 paper in the Communications of the ACM [Thompson 74] by Ken Thompson and Dennis Ritchie. Since that time, it has become increasingly widespread and popular throughout the computer industry where more and more vendors are offering support for it on their machines. It is especially popular in universities where it is frequently used for operating systems research and case studies.
+Many books and papers have described parts of the system, among them, two special issues of the Bell System Technical Journal in 1978 [BSTJ 78] and 1984 [BLTJ 84].</description>
+    </item>
+    
+  </channel>
+</rss>
